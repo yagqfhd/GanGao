@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.Composition.Hosting;
 using System.Linq;
+using System.Reflection;
 
 namespace GanGao.MEF
 {
@@ -21,11 +22,12 @@ namespace GanGao.MEF
                     AggregateCatalog aggregateCatalog = new AggregateCatalog();
                     string path = AppDomain.CurrentDomain.BaseDirectory;
                     var thisAssembly = new DirectoryCatalog(path, "*.dll");
-                    if (thisAssembly.Count() == 0)
-                    {
-                        path = path + "bin\\";
-                        thisAssembly = new DirectoryCatalog(path, "*.dll");
-                    }
+                    //if (thisAssembly.Count() == 0)
+                    //{
+                    //    path = path + "\\bin\\";
+                    //    thisAssembly = new DirectoryCatalog(path, "*.dll");
+                    //}
+                    aggregateCatalog.Catalogs.Add(new AssemblyCatalog(Assembly.GetExecutingAssembly()));
                     aggregateCatalog.Catalogs.Add(thisAssembly);
                     _container = new CompositionContainer(aggregateCatalog);
                     return _container;

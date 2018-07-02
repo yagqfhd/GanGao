@@ -1,4 +1,5 @@
 ﻿using GanGao.IDAL;
+using GanGao.MEF;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Data.Entity;
@@ -13,10 +14,16 @@ namespace GanGao.Common.Data
     public class EFDbContext : DbContext
     {
         public EFDbContext()
-            : base("default") { }
+            : base("default")
+        {
+            RegisgterMEF.regisgter().ComposeParts(this);
+        }
 
         public EFDbContext(string nameOrConnectionString)
-            : base(nameOrConnectionString) { }
+            : base(nameOrConnectionString)
+        {
+            RegisgterMEF.regisgter().ComposeParts(this);
+        }
 
         [ImportMany]
         public IEnumerable<IEntityMapper> EntityMappers { get; set; }
