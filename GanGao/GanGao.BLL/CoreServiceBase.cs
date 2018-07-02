@@ -1,4 +1,5 @@
 ﻿using GanGao.IDAL;
+using GanGao.MEF;
 using System.ComponentModel.Composition;
 
 namespace GanGao.BLL
@@ -8,6 +9,10 @@ namespace GanGao.BLL
     /// </summary>
     public abstract class CoreServiceBase
     {
+        public CoreServiceBase()
+        {
+            RegisgterMEF.regisgter().ComposeParts(this);
+        }
         /// <summary>
         /// 获取或设置 工作单元对象，用于处理同步业务的事务操作
         /// </summary>

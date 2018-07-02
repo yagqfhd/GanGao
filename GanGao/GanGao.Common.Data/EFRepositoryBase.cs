@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using System.ComponentModel.Composition;
 using GanGao.IDAL;
 using GanGao.Common;
+using GanGao.MEF;
 
 namespace GanGao.Common.Data
 {
@@ -14,6 +15,10 @@ namespace GanGao.Common.Data
     /// <typeparam name="TEntity">动态实体类型</typeparam>
     public abstract class EFRepositoryBase<TEntity> : IRepository<TEntity> where TEntity : Entity
     {
+        public EFRepositoryBase()
+        {
+            RegisgterMEF.regisgter().ComposeParts(this);
+        }
         #region 属性
 
         /// <summary>
