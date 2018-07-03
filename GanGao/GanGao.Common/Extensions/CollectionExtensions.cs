@@ -157,7 +157,7 @@ namespace GanGao.Common.Extensions
         /// <param name="sortConditions">排序条件集合</param>
         /// <returns></returns>
         public static IQueryable<TEntity> Where<TEntity, TKey>(this IQueryable<TEntity> source, Expression<Func<TEntity, bool>> predicate, int pageIndex, int pageSize,
-            out int total, PropertySortCondition[] sortConditions = null) where TEntity : EntityBase<TKey>
+            out int total, PropertySortCondition[] sortConditions = null) where TEntity : Entity //EntityBase<TKey>
         {
             PublicHelper.CheckArgument(source, "source");
             PublicHelper.CheckArgument(predicate, "predicate");
@@ -167,7 +167,7 @@ namespace GanGao.Common.Extensions
             total = source.Count(predicate);
             if (sortConditions == null || sortConditions.Length == 0)
             {
-                source = source.OrderBy(m => m.Id);
+                source = source.OrderBy(m => m.AddDate );
             }
             else
             {
