@@ -1,9 +1,8 @@
-﻿using GanGao.Common;
-using System;
+﻿using System;
 using System.ComponentModel.Composition;
 using System.Security.Cryptography;
 
-namespace GanGao.BLL.Validators
+namespace GanGao.Common
 {
     /// <summary>
     /// 密码校验生成

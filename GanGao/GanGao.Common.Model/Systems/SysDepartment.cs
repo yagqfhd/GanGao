@@ -27,6 +27,7 @@ namespace GanGao.Common.Model.Systems
         public SysDepartment()
         {
             Id = Guid.NewGuid().ToString();
+            Childs = new HashSet<SysDepartment>();
         }
 
         #endregion
