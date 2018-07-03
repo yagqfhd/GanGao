@@ -31,6 +31,8 @@ namespace GanGao.Common.Model.Systems
         /// 部门下的角色集合
         /// </summary>
         public virtual ICollection<UserDepartmentRole> Roles { get; }
+
+        public UserDepartment() { Roles = new HashSet<UserDepartmentRole>(); }
     }
 
     

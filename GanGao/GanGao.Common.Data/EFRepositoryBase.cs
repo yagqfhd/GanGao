@@ -17,7 +17,7 @@ namespace GanGao.Common.Data
     {
         public EFRepositoryBase()
         {
-            RegisgterMEF.regisgter().ComposeParts(this);
+            //RegisgterMEF.regisgter().ComposeParts(this);
         }
         #region 属性
 

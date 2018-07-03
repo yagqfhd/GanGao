@@ -31,6 +31,11 @@ namespace GanGao.Common.Model.Systems
         /// </summary>
         public virtual ICollection<PermissionDepartmentRole> Roles { get; }
 
+        public PermissionDepartment()
+        {
+            Roles = new HashSet<PermissionDepartmentRole>();
+        }
+
     }
 
     

@@ -50,7 +50,7 @@ namespace GanGao.Common.Model.Systems
         public SysUser()
         {
             Id = Guid.NewGuid().ToString();
-            //Departments = new HashSet<UserDepartment>();
+            Departments = new HashSet<UserDepartment>();
         }
     }
     

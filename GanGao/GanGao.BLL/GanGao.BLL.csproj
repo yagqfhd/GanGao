@@ -82,7 +82,6 @@
     <Compile Include="CoreServiceBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Validators\CoreValidator.cs" />
-    <Compile Include="Validators\PasswordValidator.cs" />
     <Compile Include="Systems\UserService.cs" />
     <Compile Include="Validators\UserValidator.cs" />
   </ItemGroup>

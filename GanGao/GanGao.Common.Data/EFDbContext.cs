@@ -16,13 +16,13 @@ namespace GanGao.Common.Data
         public EFDbContext()
             : base("default")
         {
-            RegisgterMEF.regisgter().ComposeParts(this);
+            //RegisgterMEF.regisgter().ComposeParts(this);
         }
 
         public EFDbContext(string nameOrConnectionString)
             : base(nameOrConnectionString)
         {
-            RegisgterMEF.regisgter().ComposeParts(this);
+            //RegisgterMEF.regisgter().ComposeParts(this);
         }
 
         [ImportMany]

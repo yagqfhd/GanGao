@@ -14,7 +14,7 @@ namespace GanGao.Common.Data
     {
         public EFRepositoryContext()
         {
-            RegisgterMEF.regisgter().ComposeParts(this);
+            //RegisgterMEF.regisgter().ComposeParts(this);
         }
         /// <summary>
         ///     获取 当前使用的数据访问上下文对象

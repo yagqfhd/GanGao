@@ -35,8 +35,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -55,6 +64,42 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\GanGao.BLL\GanGao.BLL.csproj">
+      <Project>{2bb2084d-b4e6-4604-b6b6-3b8f8059f7dd}</Project>
+      <Name>GanGao.BLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GanGao.Common.Data\GanGao.Common.Data.csproj">
+      <Project>{1ea1887b-3b25-4aa6-9e5b-a195b134184d}</Project>
+      <Name>GanGao.Common.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GanGao.Common.DToMap\GanGao.Common.DToMap.csproj">
+      <Project>{646c8581-c62c-45da-8722-0b807ecca61c}</Project>
+      <Name>GanGao.Common.DToMap</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GanGao.Common.DToModel\GanGao.Common.DToModel.csproj">
+      <Project>{4d438847-e365-4fb2-9aa8-e89bc33eb67d}</Project>
+      <Name>GanGao.Common.DToModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GanGao.Common.IModels\GanGao.Common.IModels.csproj">
+      <Project>{45ae0f02-066c-446f-ba92-6ac90468d6bf}</Project>
+      <Name>GanGao.Common.IModels</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GanGao.Common.Model\GanGao.Common.Model.csproj">
+      <Project>{08566fa4-7287-4ce2-9e16-c43a98361498}</Project>
+      <Name>GanGao.Common.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GanGao.Common\GanGao.Common.csproj">
+      <Project>{491622e4-09d6-497c-bec6-54f0318f3e44}</Project>
+      <Name>GanGao.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GanGao.DAL\GanGao.DAL.csproj">
+      <Project>{b5c96cc7-93a1-46cc-ab06-2b09ff77f620}</Project>
+      <Name>GanGao.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GanGao.IBLL\GanGao.IBLL.csproj">
+      <Project>{6f881755-ae70-478d-9752-aacbbc3d30cd}</Project>
+      <Name>GanGao.IBLL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GanGao.IDAL\GanGao.IDAL.csproj">
       <Project>{c9c92057-3f16-4986-9ea2-4fe71902286b}</Project>
       <Name>GanGao.IDAL</Name>
@@ -63,6 +108,10 @@
       <Project>{22646a41-c44d-46f8-ad44-ecead42c4171}</Project>
       <Name>GanGao.MEF</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
