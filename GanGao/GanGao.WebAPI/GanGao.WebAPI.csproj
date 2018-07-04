@@ -136,15 +136,15 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\MefDependencySolver.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="OAuthProvider\GanGaoAuthorizationServerProvider.cs" />
+    <Compile Include="OAuthProvider\GanGaoRefreshTokenProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StartupWebAPI.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\GanGao.BLL\GanGao.BLL.csproj">
-      <Project>{2BB2084D-B4E6-4604-B6B6-3B8F8059F7DD}</Project>
-      <Name>GanGao.BLL</Name>
-    </ProjectReference>
     <ProjectReference Include="..\GanGao.Common.Data\GanGao.Common.Data.csproj">
       <Project>{1ea1887b-3b25-4aa6-9e5b-a195b134184d}</Project>
       <Name>GanGao.Common.Data</Name>
@@ -168,10 +168,6 @@
     <ProjectReference Include="..\GanGao.Common\GanGao.Common.csproj">
       <Project>{491622e4-09d6-497c-bec6-54f0318f3e44}</Project>
       <Name>GanGao.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\GanGao.DAL\GanGao.DAL.csproj">
-      <Project>{b5c96cc7-93a1-46cc-ab06-2b09ff77f620}</Project>
-      <Name>GanGao.DAL</Name>
     </ProjectReference>
     <ProjectReference Include="..\GanGao.IBLL\GanGao.IBLL.csproj">
       <Project>{6f881755-ae70-478d-9752-aacbbc3d30cd}</Project>

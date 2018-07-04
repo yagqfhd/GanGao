@@ -7,12 +7,12 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace GanGao.BLL.OAuthProvider
+namespace GanGao.WebAPI.OAuthProvider
 {
     /// <summary>
     /// OWIN.OAuth驱动
     /// </summary>
-    [Export(typeof(GanGaoAuthorizationServerProvider))]
+    
     public class GanGaoAuthorizationServerProvider : OAuthAuthorizationServerProvider
     {
         #region ///// 私有变量属性定义

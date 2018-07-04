@@ -27,6 +27,7 @@ namespace GanGao.WebAPI
             //修改App_Start文件夹中的WebApiConfig.cs文件，实现api数据通过json格式返回
             var jsonFormatter = config.Formatters.OfType<JsonMediaTypeFormatter>().First();
             jsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            config.Formatters.XmlFormatter.SupportedMediaTypes.Clear();
         }
     }
 }

@@ -92,10 +92,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\GanGao.API\GanGao.API.csproj">
-      <Project>{08552d22-b69d-4c6a-b986-4a077332462e}</Project>
-      <Name>GanGao.API</Name>
-    </ProjectReference>
     <ProjectReference Include="..\GanGao.BLL\GanGao.BLL.csproj">
       <Project>{2bb2084d-b4e6-4604-b6b6-3b8f8059f7dd}</Project>
       <Name>GanGao.BLL</Name>
@@ -135,6 +131,10 @@
     <ProjectReference Include="..\GanGao.MEF\GanGao.MEF.csproj">
       <Project>{22646a41-c44d-46f8-ad44-ecead42c4171}</Project>
       <Name>GanGao.MEF</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GanGao.WebAPI\GanGao.WebAPI.csproj">
+      <Project>{a275228c-4de9-46cf-a6c3-f33a8e58ef1d}</Project>
+      <Name>GanGao.WebAPI</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -6,12 +6,12 @@ using System.ComponentModel.Composition;
 using System.Linq;
 using System.Web;
 
-namespace GanGao.BLL.OAuthProvider
+namespace GanGao.WebAPI.OAuthProvider
 {
     /// <summary>
     /// 刷新Token驱动
     /// </summary>
-    [Export(typeof(GanGaoRefreshTokenProvider))]
+    
     public class GanGaoRefreshTokenProvider : AuthenticationTokenProvider
     {
         private static ConcurrentDictionary<string, string> _refreshTokens = new ConcurrentDictionary<string, string>();

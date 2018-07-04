@@ -3,10 +3,8 @@ using Owin;
 using System.Web.Http;
 using Microsoft.Owin.Cors;
 using Microsoft.Owin.Security.OAuth;
-using System.ComponentModel.Composition;
 using System;
-using GanGao.MEF;
-using GanGao.BLL.OAuthProvider;
+using GanGao.WebAPI.OAuthProvider;
 
 [assembly: OwinStartup(typeof(GanGao.WebAPI.StartupWebAPI))]
 
@@ -26,18 +24,10 @@ namespace GanGao.WebAPI
             //这一行代码必须放在ConfiureOAuth(app)之后
             app.UseWebApi(config);
             WebApiConfig.Register(config);
+            MefConfig.RegisterMef(config);
         }
 
-        /// <summary>
-        /// 刷新Token驱动
-        /// </summary>
-        [Import]
-        GanGaoRefreshTokenProvider  refreshProvider { get; set; }
-        /// <summary>
-        /// 生成Token驱动
-        /// </summary>
-        [Import]
-        GanGaoAuthorizationServerProvider serverProvider { get; set; }
+        
 
         /// <summary>
         /// OAuth验证服务配置
@@ -45,17 +35,15 @@ namespace GanGao.WebAPI
         /// <param name="app"></param>
         public void ConfiureOAuth(IAppBuilder app)
         {
-            RegisgterMEF.regisgter().ComposeParts(this);
-
             /// OAuth 验证服务器配置信息
             var serverOptions = new OAuthAuthorizationServerOptions
-            {                
-                TokenEndpointPath = new PathString("API/Token"),
-                RefreshTokenProvider = refreshProvider,
+            {
+                TokenEndpointPath = new PathString("/API/Token"),
+                RefreshTokenProvider = new GanGaoRefreshTokenProvider(),
                 AccessTokenExpireTimeSpan = TimeSpan.FromMinutes(30),
                 AllowInsecureHttp = true,
                 AuthenticationMode = Microsoft.Owin.Security.AuthenticationMode.Active,
-                Provider = serverProvider
+                Provider = new GanGaoAuthorizationServerProvider()
             };
             ///打开 OAuth服务
             app.UseOAuthAuthorizationServer(serverOptions);

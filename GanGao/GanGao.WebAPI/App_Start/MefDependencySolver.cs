@@ -8,7 +8,7 @@ using System.ComponentModel.Composition.Primitives;
 using System.Web.Http;
 using System.Web.Http.Dependencies;
 
-namespace GanGao.API
+namespace GanGao.WebAPI
 {
     /// <summary>
     /// MEF IOC
