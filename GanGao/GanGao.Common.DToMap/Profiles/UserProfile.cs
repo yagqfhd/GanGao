@@ -25,10 +25,21 @@ namespace GanGao.Common.DToMap.Profiles
 
         
     }
+    //private class MyResolver : IValueResolver<SysUser,DTOUser,>
+    //{
 
+    //    public ResolutionResult Resolve(ResolutionResult source)
+    //    {
+    //        var destinationSubEntity = ((Entity)source.Context.DestinationValue).Sub;
+
+    //        Mapper.Map((Dto)source.Value, destinationSubEntity);
+
+    //        return source.New(destinationSubEntity, typeof(SubEntity));
+    //    }
+    //}
     //static class MapperConfig2
     //{
-    //    private class MyResolver : AutoMapper.IValueResolver<>
+    //    private class MyResolver : IValueResolver<>
     //    {
 
     //        public ResolutionResult Resolve(ResolutionResult source)
