@@ -15,19 +15,19 @@ namespace GanGao.Common.DToMap
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
-        DTOUser UserDtoM(SysUser user,DTOUser dto=null);
+        DTOUser UserToDTo(SysUser user,DTOUser dto=null);
         /// <summary>
         /// 用户的 DTO Model 映射
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
-        SysUser UserMtoD(DTOUser dto,SysUser user=null);
+        SysUser DToToUser(DTOUser dto,SysUser user=null);
         /// <summary>
         /// 用户的 DTO Model 映射
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
-        IEnumerable<DTOUser> UserDtoM(IEnumerable<SysUser> user);
+        IEnumerable<DTOUser> DToToUser(IEnumerable<SysUser> user);
         
     }
 }

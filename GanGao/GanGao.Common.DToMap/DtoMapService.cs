@@ -10,17 +10,17 @@ namespace GanGao.Common.DToMap
     [Export(typeof(IDtoMapService))]
     public class DtoMapService : IDtoMapService
     {
-        public IEnumerable<DTOUser> UserDtoM(IEnumerable<SysUser> user)
+        public IEnumerable<DTOUser> DToToUser(IEnumerable<SysUser> user)
         {
             throw new NotImplementedException();
         }
 
-        public DTOUser UserDtoM(SysUser user, DTOUser dto = null)
+        public DTOUser UserToDTo(SysUser user, DTOUser dto = null)
         {
             throw new NotImplementedException();
         }
 
-        public SysUser UserMtoD(DTOUser dto, SysUser user = null)
+        public SysUser DToToUser(DTOUser dto, SysUser user = null)
         {
             throw new NotImplementedException();
         }
