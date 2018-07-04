@@ -22,7 +22,7 @@ namespace GanGao.BLL.Validators
         public UserValidator():base()
         {
             /// MEF IoC映射
-            RegisgterMEF.regisgter().ComposeParts(this);
+            //RegisgterMEF.regisgter().ComposeParts(this);
         }
         /// <summary>
         /// 获取或设置 用户信息数据访问对象

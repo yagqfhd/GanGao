@@ -1,4 +1,5 @@
-﻿using GanGao.IDAL;
+﻿
+using GanGao.Common.Data;
 using GanGao.MEF;
 using System.ComponentModel.Composition;
 

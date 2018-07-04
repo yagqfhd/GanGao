@@ -6,6 +6,7 @@ using System.ComponentModel.Composition;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 
 namespace GanGao.API.Controllers
@@ -14,16 +15,15 @@ namespace GanGao.API.Controllers
     [PartCreationPolicy(CreationPolicy.NonShared)]
     public class UserController : ApiController
     {
-        //public UserController()
-        //{
-        //    //RegisgterMEF.regisgter().ComposeParts(this);
-        //}
+        ///IOC获取用户服务        
         [Import]
         IUserService userService { get; set; }
 
-        public IHttpActionResult Get()
+
+        public async Task<IHttpActionResult> Get()
         {
-            return Ok(string.Format("测试 {0}: userService Import =[{1}]",new Random(100).Next(), userService==null));
+            var username = await userService.FindUserAsync("admin");
+            return Ok(string.Format("测试 {0}: userService Import =[{1}] userName =[{2}]",new Random().Next(1,1000), userService==null,username==null? "无用户":username.Name));
         }
     }
 }

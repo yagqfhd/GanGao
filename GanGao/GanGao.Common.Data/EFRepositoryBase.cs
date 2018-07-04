@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.ComponentModel.Composition;
-using GanGao.IDAL;
-using GanGao.Common;
-using GanGao.MEF;
+
 
 namespace GanGao.Common.Data
 {

@@ -1,4 +1,5 @@
 ﻿
+using GanGao.Common.Data;
 using GanGao.Common.Model.Systems;
 
 namespace GanGao.IDAL.ISystems

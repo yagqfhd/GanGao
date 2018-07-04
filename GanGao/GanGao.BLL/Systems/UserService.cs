@@ -8,7 +8,7 @@ using GanGao.Common;
 using GanGao.Common.DToModel.Systems;
 using GanGao.Common.Model.Systems;
 using GanGao.MEF;
-using GanGao.IBLL.DToMap;
+using GanGao.Common.DToMap;
 
 namespace GanGao.BLL
 {
@@ -22,7 +22,7 @@ namespace GanGao.BLL
         {
             AutoSaved = false;
             /// MEF IoC映射
-            RegisgterMEF.regisgter().ComposeParts(this);
+            //RegisgterMEF.regisgter().ComposeParts(this);
 
         }
 

@@ -1,5 +1,4 @@
-﻿using GanGao.IDAL;
-using GanGao.MEF;
+﻿
 using System.ComponentModel.Composition;
 using System.Data.Entity;
 
@@ -12,10 +11,7 @@ namespace GanGao.Common.Data
     [Export(typeof (IUnitOfWork))]
     internal class EFRepositoryContext : UnitOfWorkContextBase
     {
-        public EFRepositoryContext()
-        {
-            //RegisgterMEF.regisgter().ComposeParts(this);
-        }
+        public EFRepositoryContext(){}
         /// <summary>
         ///     获取 当前使用的数据访问上下文对象
         /// </summary>

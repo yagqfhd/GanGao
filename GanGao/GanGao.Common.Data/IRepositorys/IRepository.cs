@@ -5,7 +5,7 @@ using System.Linq;
 using System.Linq.Expressions;
 
 
-namespace GanGao.IDAL
+namespace GanGao.Common.Data
 {
     /// <summary>
     ///     定义仓储模型中的数据标准操作

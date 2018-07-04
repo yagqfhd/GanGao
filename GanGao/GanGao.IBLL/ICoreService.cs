@@ -1,4 +1,5 @@
-﻿using GanGao.Common;
+﻿
+using GanGao.Common;
 using System.Threading.Tasks;
 
 namespace GanGao.IBLL

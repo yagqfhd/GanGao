@@ -28,7 +28,7 @@ namespace GanGao.MEF
                         thisAssembly = new DirectoryCatalog(path, "*.dll");
                     }
                     aggregateCatalog.Catalogs.Add(thisAssembly);                    
-                    _container = new CompositionContainer(aggregateCatalog);
+                    _container = new CompositionContainer(aggregateCatalog,CompositionOptions.DisableSilentRejection);
                     return _container;
                 }
                 catch (Exception ex)

@@ -1,10 +1,8 @@
 ﻿
-
-
 using System.ComponentModel.Composition;
 using System.Data.Entity.ModelConfiguration.Configuration;
 
-namespace GanGao.IDAL
+namespace GanGao.Common.Data
 {
     /// <summary>
     ///     实体映射接口

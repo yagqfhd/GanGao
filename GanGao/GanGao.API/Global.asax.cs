@@ -11,9 +11,9 @@ namespace GanGao.API
     {
         protected void Application_Start()
         {
-            GlobalConfiguration.Configure(WebApiConfig.Register);
-            MefConfig.RegisterMef();
-            // GlobalConfiguration.Configuration.DependencyResolver = solver;
+            //GlobalConfiguration.Configure(WebApiConfig.Register);
+            //MefConfig.RegisterMef(GlobalConfiguration.Configuration);
+            
         }
     }
 }

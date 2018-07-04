@@ -1,4 +1,4 @@
-﻿namespace GanGao.IDAL
+﻿namespace GanGao.Common.Data
 {
     /// <summary>
     ///     业务单元操作接口

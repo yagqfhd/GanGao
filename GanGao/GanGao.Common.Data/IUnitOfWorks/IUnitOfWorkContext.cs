@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 
-namespace GanGao.IDAL
+namespace GanGao.Common.Data
 {
     /// <summary>
     ///     数据单元操作接口

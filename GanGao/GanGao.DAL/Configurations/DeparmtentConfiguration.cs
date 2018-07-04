@@ -1,5 +1,5 @@
-﻿using GanGao.Common.Model.Systems;
-using GanGao.IDAL;
+﻿using GanGao.Common.Data;
+using GanGao.Common.Model.Systems;
 using System.Data.Entity.ModelConfiguration;
 using System.Data.Entity.ModelConfiguration.Configuration;
 
