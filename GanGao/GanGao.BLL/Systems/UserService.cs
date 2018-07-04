@@ -86,7 +86,7 @@ namespace GanGao.BLL
             //校验参数！=NULL
             PublicHelper.CheckArgument(entity, "entity");
             // 实体模型转换
-            var user = DtoMap.DToToUser(entity);
+            var user = DtoMap.Map<SysUser>(entity);
             // 校验实体
             var validateResult =await Validator.ValidateAsync(user);
             if (validateResult.ResultType != OperationResultType.Success)
@@ -132,11 +132,11 @@ namespace GanGao.BLL
             if (user == null)
                 return new OperationResult(OperationResultType.Warning, "用户不存在！");
             // 实体模型转换
-            user = DtoMap.DToToUser(entity,user);            
+            user = DtoMap.Map<DTOUser,SysUser>(entity,user);            
             // 校验实体
             var validateResult = await Validator.ValidateAsync(user);
             if (validateResult.ResultType == OperationResultType.Success)
-                return validateResult;
+                return new OperationResult(OperationResultType.Failed, "用户不存在");
             //更新实体
             Repository.Update(user, AutoSaved);
             // 返回正确
@@ -217,7 +217,7 @@ namespace GanGao.BLL
             {
                 return Task.FromResult<DTOUser>(null);
             }
-            return Task.FromResult<DTOUser>(DtoMap.UserToDTo(user));
+            return Task.FromResult<DTOUser>(DtoMap.Map<DTOUser>(user));
         }
         /// <summary>
         /// 按照名次查询用户
@@ -232,7 +232,7 @@ namespace GanGao.BLL
             {
                 return Task.FromResult<DTOUser>(null);
             }
-            return Task.FromResult<DTOUser>(DtoMap.UserToDTo(user));
+            return Task.FromResult<DTOUser>(DtoMap.Map<DTOUser>(user));
         }
         /// <summary>
         /// 按照Email查询用户
@@ -247,7 +247,7 @@ namespace GanGao.BLL
             {
                 return Task.FromResult<DTOUser>(null);
             }
-            return Task.FromResult<DTOUser>(DtoMap.UserToDTo(user));
+            return Task.FromResult<DTOUser>(DtoMap.Map<DTOUser>(user));
         }
         /// <summary>
         /// 按照用户名获取Email查询用户
@@ -262,7 +262,7 @@ namespace GanGao.BLL
             {
                 return Task.FromResult<DTOUser>(null);
             }
-            return Task.FromResult<DTOUser> (DtoMap.UserToDTo(user));
+            return Task.FromResult<DTOUser> (DtoMap.Map<DTOUser>(user));
         }
         /// <summary>
         /// 根据用户名或Email，密码获取用户
@@ -282,7 +282,7 @@ namespace GanGao.BLL
             }
             //校验密码
             if (PasswordValidator.VerifyHashedPassword(user.PasswordHash, password))
-                return Task.FromResult<DTOUser>(DtoMap.UserToDTo(user));
+                return Task.FromResult<DTOUser>(DtoMap.Map<DTOUser>(user));
             return Task.FromResult<DTOUser>(null);
         }
         #endregion
@@ -311,7 +311,7 @@ namespace GanGao.BLL
             // 获取分页数据
             var users = query.Skip(skip).Take(Limit).ToList();
             // 模型转换        
-            return Task.FromResult<IEnumerable<DTOUser>>(DtoMap.DToToUser(users));
+            return Task.FromResult<IEnumerable<DTOUser>>(DtoMap.Map<IEnumerable<DTOUser>>(users));
         }
         #endregion
 

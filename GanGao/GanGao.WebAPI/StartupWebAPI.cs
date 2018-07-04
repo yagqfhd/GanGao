@@ -5,6 +5,8 @@ using Microsoft.Owin.Cors;
 using Microsoft.Owin.Security.OAuth;
 using System;
 using GanGao.WebAPI.OAuthProvider;
+using GanGao.Common.DToMap;
+using GanGao.DAL.Initialize;
 
 [assembly: OwinStartup(typeof(GanGao.WebAPI.StartupWebAPI))]
 
@@ -24,7 +26,10 @@ namespace GanGao.WebAPI
             //这一行代码必须放在ConfiureOAuth(app)之后
             app.UseWebApi(config);
             WebApiConfig.Register(config);
+            AutoMapperProfileRegister.Register();
             MefConfig.RegisterMef(config);
+
+            DatabaseInitializer.Initialize();
         }
 
         

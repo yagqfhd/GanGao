@@ -169,6 +169,10 @@
       <Project>{491622e4-09d6-497c-bec6-54f0318f3e44}</Project>
       <Name>GanGao.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\GanGao.DAL\GanGao.DAL.csproj">
+      <Project>{B5C96CC7-93A1-46CC-AB06-2B09FF77F620}</Project>
+      <Name>GanGao.DAL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GanGao.IBLL\GanGao.IBLL.csproj">
       <Project>{6f881755-ae70-478d-9752-aacbbc3d30cd}</Project>
       <Name>GanGao.IBLL</Name>

@@ -15,14 +15,22 @@ namespace GanGao.DAL.Initialize
     /// </summary>
     public static class DatabaseInitializer
     {
-        
+
         /// <summary>
         /// 数据库初始化
         /// </summary>
-        public static void Initialize(string defaultPassword)
+        //导出私有方法(有参数)
+        //[Export(typeof(Func<>))]
+        public static void Initialize()
         {
+#if DEBUG
+            Console.WriteLine("开始 Database init...");
+#endif 
             if (Database.Exists("default")) return;
-            Database.SetInitializer(new MigrateDatabaseToLatestVersion<EFDbContext, Configuration>());
+#if DEBUG
+            Console.WriteLine("开始 Database init...OKKK");
+#endif 
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion<EFDbContext, Configuration>());            
         }
     }
 }

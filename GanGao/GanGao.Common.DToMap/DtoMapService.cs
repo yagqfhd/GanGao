@@ -4,38 +4,27 @@ using System.Collections.Generic;
 using GanGao.Common.DToModel.Systems;
 using GanGao.Common.Model.Systems;
 using System.ComponentModel.Composition;
+using AutoMapper;
 
 namespace GanGao.Common.DToMap
 {
     [Export(typeof(IDtoMapService))]
     public class DtoMapService : IDtoMapService
     {
-        /// <summary>
-        /// 用户的 DTO Model 映射
-        /// </summary>
-        /// <param name="user"></param>
-        /// <returns></returns>
-        public IEnumerable<DTOUser> DToToUser(IEnumerable<SysUser> user)
+        
+        public TDestination Map<TDestination>(object source)
         {
-            throw new NotImplementedException();
+            return Mapper.Map<TDestination>(source);
         }
-        /// <summary>
-        /// 用户的 DTO Model 映射
-        /// </summary>
-        /// <param name="user"></param>
-        /// <returns></returns>
-        public DTOUser UserToDTo(SysUser user, DTOUser dto = null)
+
+        public TDestination Map<TSource, TDestination>(TSource source)
         {
-            throw new NotImplementedException();
+            return Mapper.Map<TSource,TDestination>(source);
         }
-        /// <summary>
-        /// 用户的 DTO Model 映射
-        /// </summary>
-        /// <param name="user"></param>
-        /// <returns></returns>
-        public SysUser DToToUser(DTOUser dto, SysUser user = null)
+        public TDestination Map<TSource, TDestination>(TSource source, TDestination destination)
         {
-            throw new NotImplementedException();
+            return Mapper.Map<TSource, TDestination>(source, destination);
         }
+        
     }
 }

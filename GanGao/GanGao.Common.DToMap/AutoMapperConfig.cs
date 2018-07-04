@@ -8,33 +8,21 @@ using System.Web;
 
 namespace GanGao.Common.DToMap
 {
-    public class AutoMapperConfig
+    public class AutoMapperProfileRegister
     {
-        [ImportMany]
-        public IEnumerable<IAutoMapperProfile> Profiles { get; set; }
-
-        public void Register()
+        public static void Register()
         {
-            Mapper.Configuration.GetAllTypeMaps();
-            //Mapper.Configuration.AddProfile(new ViewModelToModelProfile());
-        }
-
-        public void RegistProfiles()
-        {
-            if (Profiles == null)
+            var assembly = typeof(IAutoMapperProfile).Assembly;
+#if DEBUG
+            var types = assembly.GetTypes();
+            Console.WriteLine("typeof(IAutoMapperProfile).GetTypes().Count()={0}", types.Count());
+            foreach (var type in types)
             {
-                //return;
-                throw PublicHelper.ThrowDataAccessException("AutoMapper 配置映射对象个数为0。");
+                Console.WriteLine("Type:{0}", type.Name);
             }
             
-            Mapper.Initialize(cfg => {
-                foreach (var mapper in Profiles)
-                {                    
-                    cfg.AddProfile(mapper as Profile);
-                }
-                
-            });
-            
-        }
+#endif 
+            Mapper.Initialize(cfg => cfg.AddProfiles(assembly));
+        }        
     }
 }

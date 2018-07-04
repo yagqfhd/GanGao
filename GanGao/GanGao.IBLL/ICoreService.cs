@@ -13,6 +13,10 @@ namespace GanGao.IBLL
         where TEntity : class
     {
         /// <summary>
+        /// 自动保存
+        /// </summary>
+        bool AutoSaved { get; set; }
+        /// <summary>
         /// 创建实体
         /// </summary>
         /// <param name="entity"></param>

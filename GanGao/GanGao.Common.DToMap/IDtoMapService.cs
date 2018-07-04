@@ -10,24 +10,8 @@ namespace GanGao.Common.DToMap
     /// </summary>
     public interface IDtoMapService
     {
-        /// <summary>
-        /// 用户的 DTO Model 映射
-        /// </summary>
-        /// <param name="user"></param>
-        /// <returns></returns>
-        DTOUser UserToDTo(SysUser user,DTOUser dto=null);
-        /// <summary>
-        /// 用户的 DTO Model 映射
-        /// </summary>
-        /// <param name="user"></param>
-        /// <returns></returns>
-        SysUser DToToUser(DTOUser dto,SysUser user=null);
-        /// <summary>
-        /// 用户的 DTO Model 映射
-        /// </summary>
-        /// <param name="user"></param>
-        /// <returns></returns>
-        IEnumerable<DTOUser> DToToUser(IEnumerable<SysUser> user);
-        
+        TDestination Map<TDestination>(object source);
+        TDestination Map<TSource, TDestination>(TSource source);
+        TDestination Map<TSource, TDestination>(TSource source, TDestination destination);
     }
 }

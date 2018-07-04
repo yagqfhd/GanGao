@@ -29,7 +29,7 @@ namespace GanGao.DAL.Test
             Compose();
             var defaultPassword = PasswordValidator.HashPassword("123456");
             Console.WriteLine("Password [{0}]", defaultPassword);
-            DatabaseInitializer.Initialize(defaultPassword);
+            DatabaseInitializer.Initialize();
         }
         [TestMethod]
         public void TestUserRepository()

@@ -88,6 +88,7 @@
     <Compile Include="DtoMapService.cs" />
     <Compile Include="IDtoMapService.cs" />
     <Compile Include="Profiles\IAutoMapperProfile.cs" />
+    <Compile Include="Profiles\UserProfile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
