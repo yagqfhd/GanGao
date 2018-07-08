@@ -262,7 +262,8 @@ namespace GanGao.BLL
             {
                 return Task.FromResult<DTOUser>(null);
             }
-            return Task.FromResult<DTOUser> (DtoMap.Map<DTOUser>(user));
+            var dtoUser = DtoMap.Map<DTOUser>(user);
+            return Task.FromResult<DTOUser> (dtoUser);
         }
         /// <summary>
         /// 根据用户名或Email，密码获取用户

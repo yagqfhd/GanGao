@@ -46,7 +46,7 @@ namespace GanGao.DAL.Configurations
         {
             // 表名次定义
             this.ToTable("Sys_UserDepartments");
-
+            
             //主键定义
             this.HasKey((UserDepartment m) => new { UserId = m.UserId, DepartmentId = m.DepartmentId });
             //索引定义
@@ -54,10 +54,16 @@ namespace GanGao.DAL.Configurations
             this.HasIndex(m => m.DepartmentId);
             //属性定义
             this.Property(m => m.UserId).HasMaxLength(64);
-            this.Property(m => m.DepartmentId).HasMaxLength(64);            
+            this.Property(m => m.DepartmentId).HasMaxLength(64);
             //关系映射
+            //this.HasRequired(m=>m.u)
             this.HasMany(m => m.Roles).WithOptional().HasForeignKey( k => new { UserId = k.UserId, DepartmentId = k.DepartmentId});
-            
+            this.HasRequired(m => m.Department)
+                .WithMany()
+                .HasForeignKey(k => k.DepartmentId);
+            //    .Map(m => m.MapKey("Department_Id"));
+
+            //.Map(m => m.MapKey("Id"));//
         }
 
         public void RegistTo(ConfigurationRegistrar configurations)

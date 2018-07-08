@@ -24,7 +24,7 @@ namespace GanGao.Common.Model.Systems
         /// <summary>
         /// 部门实体
         /// </summary>
-        public virtual SysDepartment Department { get; }
+        public virtual SysDepartment Department { get; set; }
 
         /// <summary>
         /// 部门下的角色集合

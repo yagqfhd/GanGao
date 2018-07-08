@@ -23,7 +23,8 @@ namespace GanGao.DAL.Configurations
             this.Property(m => m.Name).HasMaxLength(16);
             this.Property(m => m.Description).HasMaxLength(128);
             //关系映射
-            // 部门无关系映射            
+            // 部门无关系映射      
+            this.HasMany(m => m.Childs).WithOptional(k => k.Parent);      
         }
 
         public void RegistTo(ConfigurationRegistrar configurations)

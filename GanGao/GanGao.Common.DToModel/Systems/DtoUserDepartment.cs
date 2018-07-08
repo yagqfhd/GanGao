@@ -15,5 +15,6 @@ namespace GanGao.Common.DToModel.Systems
         /// </summary>
         public string Name { get; set; }
         
+        public ICollection<DtoUserDepartmentRole> Roles { get; set; }
     }
 }

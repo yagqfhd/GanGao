@@ -21,13 +21,14 @@ namespace GanGao.WebAPI
         {
             _catalog = catalog;
 #if DEBUG
-            new CompositionContainer(_catalog, CompositionOptions.DisableSilentRejection);
+            
+            _compositionContainer = new CompositionContainer(_catalog, CompositionOptions.DisableSilentRejection);
             Console.WriteLine("MefDependncySolver Create");
 #else
-            new CompositionContainer(_catalog);
+            _compositionContainer = new CompositionContainer(_catalog);
 #endif
             //_compositionContainer = new CompositionContainer(_catalog, CompositionOptions.DisableSilentRejection);
-            
+
         }
         /// <summary>
         /// Container
@@ -36,18 +37,18 @@ namespace GanGao.WebAPI
         {
             get
             {
-#if DEBUG
+//#if DEBUG
                 Console.WriteLine("Get CompositionContainer Container ={0}", _compositionContainer == null);
-#endif 
-                if(_compositionContainer==null)
-                {
-#if DEBUG
-                    _compositionContainer = new CompositionContainer(_catalog, CompositionOptions.DisableSilentRejection);
-                    Console.WriteLine("MefDependncySolver Create");
-#else
-                    _compositionContainer = new CompositionContainer(_catalog);
-#endif
-                }
+//#endif 
+//                if(_compositionContainer==null)
+//                {
+//#if DEBUG
+//                    _compositionContainer = new CompositionContainer(_catalog, CompositionOptions.DisableSilentRejection);
+//                    Console.WriteLine("MefDependncySolver Create");
+//#else
+//                    _compositionContainer = new CompositionContainer(_catalog);
+//#endif
+//                }
                 return _compositionContainer;
             }
         }

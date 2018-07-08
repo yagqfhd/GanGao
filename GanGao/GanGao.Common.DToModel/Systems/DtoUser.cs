@@ -38,5 +38,7 @@ namespace GanGao.Common.DToModel.Systems
         /// 用户的真实姓名
         /// </summary>
         public string TrueName { get; set; }
+
+        public ICollection<DtoUserDepartment> Departments { get; set; }
     }
 }

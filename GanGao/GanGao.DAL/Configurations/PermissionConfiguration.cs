@@ -26,7 +26,7 @@ namespace GanGao.DAL.Configurations
             //// 排除字段定义
             //this.Ignore(m => m.AddDate).Ignore(m => m.IsDeleted).Ignore(m => m.Timestamp);
             ////关系映射
-            //this.HasMany(m => m.Departments).WithOptional().HasForeignKey(k => k.PermissionId);
+            this.HasMany(m => m.Departments).WithOptional().HasForeignKey(k => k.PermissionId);
         }
 
         public void RegistTo(ConfigurationRegistrar configurations)
@@ -55,7 +55,7 @@ namespace GanGao.DAL.Configurations
             this.Property(m => m.DepartmentId).HasMaxLength(64);
             //关系映射
             this.HasMany(m => m.Roles).WithOptional().HasForeignKey(k => new { PermissionId = k.PermissionId, DepartmentId = k.DepartmentId });
-
+            this.HasRequired(m => m.Department).WithMany().HasForeignKey(k => k.DepartmentId);
         }
 
         public void RegistTo(ConfigurationRegistrar configurations)

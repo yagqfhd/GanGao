@@ -3,6 +3,7 @@ using GanGao.Common.IModels.ISystems;
 using GanGao.Common.Model.Bases;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GanGao.Common.Model.Systems
 {
@@ -19,14 +20,20 @@ namespace GanGao.Common.Model.Systems
         /// 用户ID
         /// </summary>
         public string UserId { get; set; }
+
+        
         /// <summary>
         /// 部门ID
         /// </summary>
+        //[ForeignKey("Department")]
         public string DepartmentId { get; set; }
+
         /// <summary>
         /// 部门实体
         /// </summary>
-        public virtual SysDepartment Department { get; }
+        //[ForeignKey("DepartmentId")]
+        public virtual SysDepartment Department { get; set; } //virtual 
+
         /// <summary>
         /// 部门下的角色集合
         /// </summary>

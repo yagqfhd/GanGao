@@ -10,15 +10,35 @@ namespace GanGao.WebAPI.Controllers
     [PartCreationPolicy(CreationPolicy.NonShared)]
     public class UserController : ApiController
     {
+//#if DEBUG
+//        public UserController() : base()
+//        {
+//            Console.WriteLine("User Controller Create..");
+//            foreach(var t in  typeof(UserController).Assembly.GetTypes())
+//            {
+//                Console.WriteLine("Type {0}", t.FullName);
+//            }
+
+//        }
+//#endif 
+
+
         ///IOC获取用户服务        
         [Import]
         IUserService userService { get; set; }
 
-
-        public async Task<IHttpActionResult> Get(string username)
+        
+        public async Task<IHttpActionResult> Get()
         {
+            Console.WriteLine("User/Get userService={0}", userService == null);
+            if (userService == null)
+            {
+                return Ok("UserServer Map Error");
+            }
+            //[FromUri]string username
+            string username = "admin";
             if (string.IsNullOrWhiteSpace(username) == true)
-                return BadRequest("用户不存在");
+                return Ok("用户不存在"); //BadRequest
             var DtoUser = await userService.FindUserAsync(username);
             var up = DtoUser;
             userService.AutoSaved = true;

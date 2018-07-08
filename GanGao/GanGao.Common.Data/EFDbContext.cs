@@ -35,6 +35,8 @@ namespace GanGao.Common.Data
             {
                 mapper.RegistTo(modelBuilder.Configurations);
             }
+
+
         }
     }
 }

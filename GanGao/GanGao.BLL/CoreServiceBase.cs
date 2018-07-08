@@ -12,7 +12,7 @@ namespace GanGao.BLL
     {
         public CoreServiceBase()
         {
-            RegisgterMEF.regisgter().ComposeParts(this);
+            //RegisgterMEF.regisgter().ComposeParts(this);
         }
         /// <summary>
         /// 获取或设置 工作单元对象，用于处理同步业务的事务操作
