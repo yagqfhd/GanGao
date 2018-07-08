@@ -10,17 +10,17 @@ namespace GanGao.WebAPI.Controllers
     [PartCreationPolicy(CreationPolicy.NonShared)]
     public class UserController : ApiController
     {
-//#if DEBUG
-//        public UserController() : base()
-//        {
-//            Console.WriteLine("User Controller Create..");
-//            foreach(var t in  typeof(UserController).Assembly.GetTypes())
-//            {
-//                Console.WriteLine("Type {0}", t.FullName);
-//            }
+#if DEBUG
+        public UserController() : base()
+        {
+            Console.WriteLine("User Controller Create..");
+            foreach (var t in typeof(UserController).Assembly.GetTypes())
+            {
+                Console.WriteLine("Type {0}", t.FullName);
+            }
 
-//        }
-//#endif 
+        }
+#endif
 
 
         ///IOC获取用户服务        

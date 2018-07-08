@@ -21,9 +21,9 @@ namespace GanGao.WebAPI
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi", // {action}/
-                routeTemplate: "api/{controller}/{id}",
+                routeTemplate: "api/v{version}/{controller}/{id}",
                 defaults: new {
-                    //Version = 1//,
+                    Version = 1,
                     id = RouteParameter.Optional
                 }
             );
