@@ -7,22 +7,23 @@ using System.ComponentModel.Composition.Hosting;
 using System.ComponentModel.Composition.Primitives;
 using System.Web.Http;
 using System.Web.Http.Dependencies;
+using GanGao.MEF;
 
 namespace GanGao.WebAPI
 {
     /// <summary>
     /// MEF IOC
     /// </summary>
-    public class MefDependencySolver : IDependencyResolver
+    public class MefDependencySolver :  IDependencyResolver
     {
         private readonly ComposablePartCatalog _catalog;
         private static CompositionContainer _compositionContainer=null;
-        public MefDependencySolver(ComposablePartCatalog catalog)
+        public MefDependencySolver()//(ComposablePartCatalog catalog)
         {
-            _catalog = catalog;
+            //_catalog = catalog;
 #if DEBUG
             
-            _compositionContainer = new CompositionContainer(_catalog, CompositionOptions.DisableSilentRejection);
+            //_compositionContainer = new CompositionContainer(_catalog, CompositionOptions.DisableSilentRejection);
             Console.WriteLine("MefDependncySolver Create");
 #else
             _compositionContainer = new CompositionContainer(_catalog);
@@ -37,19 +38,21 @@ namespace GanGao.WebAPI
         {
             get
             {
-//#if DEBUG
-                Console.WriteLine("Get CompositionContainer Container ={0}", _compositionContainer == null);
-//#endif 
-//                if(_compositionContainer==null)
-//                {
-//#if DEBUG
-//                    _compositionContainer = new CompositionContainer(_catalog, CompositionOptions.DisableSilentRejection);
-//                    Console.WriteLine("MefDependncySolver Create");
-//#else
-//                    _compositionContainer = new CompositionContainer(_catalog);
-//#endif
-//                }
-                return _compositionContainer;
+
+                //#if DEBUG
+                //Console.WriteLine("Get CompositionContainer Container ={0}", _compositionContainer == null);
+                //#endif 
+                //                if(_compositionContainer==null)
+                //                {
+                //#if DEBUG
+                //                    _compositionContainer = new CompositionContainer(_catalog, CompositionOptions.DisableSilentRejection);
+                //                    Console.WriteLine("MefDependncySolver Create");
+                //#else
+                //                    _compositionContainer = new CompositionContainer(_catalog);
+                //#endif
+                //                }
+                // return _compositionContainer;
+                return RegisgterMEF.regisgter();
             }
         }
 
@@ -62,13 +65,13 @@ namespace GanGao.WebAPI
         /// <returns></returns>
         public object GetService(Type serviceType)
         {
-            
-            string contractName = AttributedModelServices.GetContractName(serviceType);            
-            var result = Container.GetExportedValueOrDefault<object>(contractName);
+                string contractName = AttributedModelServices.GetContractName(serviceType);
+                var result = Container.GetExportedValueOrDefault<object>(contractName);
+                
 #if DEBUG
-            Console.WriteLine("Solver GetService One typeContract {0} = {1}", contractName,result==null? "null" : result.ToString());
+                Console.WriteLine("Solver GetService One typeContract {0} = {1}", contractName, result == null ? "null" : result.ToString());
 #endif
-            return result;
+                return result;
         }
 
         /// <summary>
@@ -107,6 +110,8 @@ namespace GanGao.WebAPI
         public void Dispose()
         {
             //ToDo
+            //Dispose(true);
+            GC.SuppressFinalize(this);
         }
     }
 
@@ -118,17 +123,17 @@ namespace GanGao.WebAPI
 #if DEBUG
             Console.WriteLine("RegisterMef....cfg");
 #endif
-            AggregateCatalog aggregateCatalog = new AggregateCatalog();
-            string path = AppDomain.CurrentDomain.BaseDirectory;
-            var thisAssembly = new DirectoryCatalog(path, "*.dll");
-            if (thisAssembly.Count() == 0)
-            {
-                path = path + "bin\\";
-                thisAssembly = new DirectoryCatalog(path, "*.dll");
-            }
-            aggregateCatalog.Catalogs.Add(thisAssembly);
+            //AggregateCatalog aggregateCatalog = new AggregateCatalog();
+            //string path = AppDomain.CurrentDomain.BaseDirectory;
+            //var thisAssembly = new DirectoryCatalog(path, "*.dll");
+            //if (thisAssembly.Count() == 0)
+            //{
+            //    path = path + "bin\\";
+            //    thisAssembly = new DirectoryCatalog(path, "*.dll");
+            //}
+            //aggregateCatalog.Catalogs.Add(thisAssembly);
 
-            var resolver = new MefDependencySolver(aggregateCatalog);
+            var resolver = new MefDependencySolver(); // new MefDependencySolver(aggregateCatalog);
             // Install MEF dependency resolver for MVC
             //DependencyResolver.SetResolver(resolver);
             // Install MEF dependency resolver for Web API

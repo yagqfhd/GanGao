@@ -1,4 +1,5 @@
 ﻿using Microsoft.Owin.Security.OAuth;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
@@ -13,17 +14,19 @@ namespace GanGao.WebAPI
     {
         public static void Register(HttpConfiguration config)
         {
+            
             // Web API 配置和服务
             //config.SuppressDefaultHostAuthentication();
             //config.Filters.Add(new HostAuthenticationFilter(OAuthDefaults.AuthenticationType));
-            //Web API 路由
+            // WebAPI 特征路由
             config.MapHttpAttributeRoutes();
-
+            //Web API 路由            
             config.Routes.MapHttpRoute(
                 name: "DefaultApi", // {action}/
-                routeTemplate: "api/v{version}/{controller}/{id}",
-                defaults: new {
-                    Version = 1,
+                routeTemplate: "api/{controller}/{id}",
+                defaults: new
+                {
+                    //Version = 1,
                     id = RouteParameter.Optional
                 }
             );
@@ -32,6 +35,7 @@ namespace GanGao.WebAPI
             var jsonFormatter = config.Formatters.OfType<JsonMediaTypeFormatter>().First();
             jsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
             config.Formatters.XmlFormatter.SupportedMediaTypes.Clear();
+            //config.Formatters.JsonFormatter.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
         }
     }
 }

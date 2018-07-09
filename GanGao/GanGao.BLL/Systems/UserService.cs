@@ -20,7 +20,7 @@ namespace GanGao.BLL
     {
         public UserService() : base()
         {
-            AutoSaved = false;
+            //AutoSaved = false;
             /// MEF IoC映射
             //RegisgterMEF.regisgter().ComposeParts(this);
 
@@ -30,7 +30,7 @@ namespace GanGao.BLL
         /// <summary>
         /// 自动保存
         /// </summary>
-        public bool AutoSaved { get; set; }
+        public bool AutoSaved { get; set; } = true;
 
         #region 受保护的属性
 
@@ -296,15 +296,15 @@ namespace GanGao.BLL
         /// <param name="Limit"></param>
         /// <param name="Order"></param>
         /// <returns></returns>
-        public virtual Task<IEnumerable<DTOUser>> UserPageListAsync(int Index, int Limit, string Order)
+        public virtual Task<IEnumerable<DTOUser>> UserPageListAsync(int skip, int Limit, string Order)
         {
             PublicHelper.CheckArgument(Order, "Order");
-            PublicHelper.CheckArgument(Index, "Index");
+            PublicHelper.CheckArgument(skip, "Index",true);
+            
             PublicHelper.CheckArgument(Limit, "Limit");
             //获取记录数
             var allCount = Repository.Entities.Count();
             // 计算跳过记录数
-            var skip = (Index - 1) * Limit;
             if (skip < 0 || skip > allCount || Limit<0)
                 return Task.FromResult <IEnumerable<DTOUser>>(null);
             // 获取排序查询
