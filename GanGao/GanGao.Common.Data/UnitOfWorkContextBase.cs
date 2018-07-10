@@ -1,4 +1,4 @@
-﻿
+﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
@@ -147,6 +147,18 @@ namespace GanGao.Common.Data
         /// <param name="entity"> 要注册的对象 </param>
         public void RegisterDeleted<TEntity>(TEntity entity) where TEntity : Entity
         {
+#if DEBUG
+            var state = Context.Entry(entity).State;
+            Console.WriteLine("Entity State = {0}", state);
+#endif
+            //var obj = Context.Set<TEntity>().Find(entity);
+            //if (obj == null)
+            //    PublicHelper.ThrowDataAccessException("注册一个删除的对象到仓储上下文中错误");
+            //Context.Entry(obj).State = EntityState.Deleted;
+            //if (state==EntityState.Detached)
+            //{
+            //    Context.Set<TEntity>().Attach(entity);
+            //}
             Context.Entry(entity).State = EntityState.Deleted;
             IsCommitted = false;
         }

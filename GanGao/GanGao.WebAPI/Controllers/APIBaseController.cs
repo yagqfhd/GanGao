@@ -48,5 +48,6 @@ namespace GanGao.WebAPI.Controllers
             //return error;
             return errstr;
         }
+        #endregion
     }
 }

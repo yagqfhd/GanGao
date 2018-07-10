@@ -89,6 +89,43 @@ namespace GanGao.IBLL.Systems
         /// <returns></returns>
         Task<IEnumerable<DTOUser>> UserPageListAsync(int Index, int Limit, string Order);
         #endregion
+
+        #region //// 部门相关
+        /// <summary>
+        /// 添加用户到部门中
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="departmentName"></param>
+        /// <returns></returns>
+        Task<OperationResult> AddDepartmentAsync(string userName, string departmentName);
+
+        /// <summary>
+        /// 移除用户从部门中
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="departmentName"></param>
+        /// <returns></returns>
+        Task<OperationResult> RemoveDepartmentAsync(string userName, string departmentName);
+        #endregion
+
+        #region //// 角色相关
+        /// <summary>
+        /// 添加用户到部门中
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="departmentName"></param>
+        /// <returns></returns>
+        Task<OperationResult> AddRoleAsync(string userName, string departmentName,string roleName);
+
+        /// <summary>
+        /// 移除用户从部门中
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="departmentName"></param>
+        /// <returns></returns>
+        Task<OperationResult> RemoveRoleAsync(string userName, string departmentName, string roleName);
+        #endregion
+
         #endregion
     }
 }

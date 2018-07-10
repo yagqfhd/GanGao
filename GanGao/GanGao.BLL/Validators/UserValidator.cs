@@ -18,12 +18,6 @@ namespace GanGao.BLL.Validators
     [Export(typeof(IValidator<SysUser>))]
     public class UserValidator : CoreValidator<SysUser>, IValidator<SysUser>
     {
-
-        public UserValidator():base()
-        {
-            /// MEF IoC映射
-            //RegisgterMEF.regisgter().ComposeParts(this);
-        }
         /// <summary>
         /// 获取或设置 用户信息数据访问对象
         /// </summary>
@@ -37,10 +31,30 @@ namespace GanGao.BLL.Validators
         /// <returns></returns>
         public override async Task<OperationResult> ValidateAsync(SysUser item)
         {
-            //检查用户名和Email
-            var user = UserRepository.Entities.Where(u => u.Name.Equals(item.Name) || u.Email.Equals(item.Email)).FirstOrDefault();
-            if (user != null && !EqualityComparer<string>.Default.Equals(user.Id, item.Id))
-                return new OperationResult(OperationResultType.Failed,String.Format(CultureInfo.CurrentCulture, "{0}:重名错误", item.Name));
+            //检查用户名和Email , 昵称，姓名
+            var users = UserRepository.Entities.Where(
+                u => u.Name.Equals(item.Name) ||
+                u.Email.Equals(item.Email) ||
+                u.Nick.Equals(item.Nick) ||
+                u.TrueName.Equals(item.TrueName));
+            if (users != null)
+            {
+                foreach(var user in users)
+                {
+                    if(!EqualityComparer<string>.Default.Equals(user.Id, item.Id))
+                    {
+                        if (user.Name.Equals(item.Name))
+                            return new OperationResult(OperationResultType.Failed, String.Format(CultureInfo.CurrentCulture, "{0}:用户名重名错误", item.Name));
+                        else if (user.Email.Equals(item.Email))
+                            return new OperationResult(OperationResultType.Failed, String.Format(CultureInfo.CurrentCulture, "{0}:Email重复错误", item.Email));
+                        else if (user.Nick.Equals(item.Nick))
+                            return new OperationResult(OperationResultType.Failed, String.Format(CultureInfo.CurrentCulture, "{0}:昵称重名错误", item.Nick));
+                        else
+                            return new OperationResult(OperationResultType.Failed, String.Format(CultureInfo.CurrentCulture, "{0}:姓名重名错误", item.TrueName));
+                    }
+                }
+                
+            }                
             return await base.ValidateAsync(item);
         }
     }

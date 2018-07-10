@@ -7,8 +7,9 @@ using GanGao.IDAL.ISystems;
 using GanGao.Common;
 using GanGao.Common.DToModel.Systems;
 using GanGao.Common.Model.Systems;
-using GanGao.MEF;
+using System;
 using GanGao.Common.DToMap;
+using System.Globalization;
 
 namespace GanGao.BLL
 {
@@ -51,7 +52,16 @@ namespace GanGao.BLL
         /// </summary>
         [Import]
         protected IUserDepartmentRoleRepository UserDepartmentRoleRepository { get; set; }
-
+        /// <summary>
+        /// 部门信息存储访问对象
+        /// </summary>
+        [Import]
+        protected IDepartmentRepository departmentRepository { get; set; }
+        /// <summary>
+        /// 角色信息存储访问对象
+        /// </summary>
+        [Import]
+        protected IRoleRepository roleRepository { get; set; }
         /// <summary>
         /// 获取或设置 用户信息校验对象
         /// </summary>
@@ -85,12 +95,17 @@ namespace GanGao.BLL
         {
             //校验参数！=NULL
             PublicHelper.CheckArgument(entity, "entity");
+            if (string.IsNullOrWhiteSpace(entity.Password) == true)
+                return new OperationResult(OperationResultType.ParamError, 
+                    String.Format(CultureInfo.CurrentCulture,
+                    Systems.SysResources.PasswordNullError));
             // 实体模型转换
             var user = DtoMap.Map<SysUser>(entity);
             // 校验实体
             var validateResult =await Validator.ValidateAsync(user);
             if (validateResult.ResultType != OperationResultType.Success)
                 return validateResult;
+            user.PasswordHash = PasswordValidator.HashPassword(entity.Password);
             // 添加到实体集合中
             Repository.Insert(user, AutoSaved);
             // 返回正确
@@ -108,10 +123,12 @@ namespace GanGao.BLL
             PublicHelper.CheckArgument(name, "name");
             // 获取实体
             var user = Repository.Entities.SingleOrDefault(d=>d.Name.Equals(name));
-            if(user == null)
+            if (user == null)
                 return Task.FromResult<OperationResult>(
-                    new OperationResult(OperationResultType.Warning,"用户不存在！")
-                );
+                    new OperationResult(OperationResultType.Warning,
+                    String.Format(CultureInfo.CurrentCulture, 
+                    Systems.SysResources.UserNoExist
+                    ,name)));                
             // 从实体集合删除
             Repository.Delete(user.Id, AutoSaved);
             // 返回正确
@@ -128,16 +145,30 @@ namespace GanGao.BLL
             //校验参数！=NULL
             PublicHelper.CheckArgument(entity, "entity");
             // 获取用户
+
+#if DEBUG
+            Console.WriteLine("获取用户");
+#endif 
             var user = Repository.Entities.SingleOrDefault(m => m.Name.Equals(entity.Name));
             if (user == null)
-                return new OperationResult(OperationResultType.Warning, "用户不存在！");
+                return new OperationResult(OperationResultType.Warning, 
+                    String.Format(CultureInfo.CurrentCulture,
+                    Systems.SysResources.UserNoExist
+                    , entity.Name));
             // 实体模型转换
-            user = DtoMap.Map<DTOUser,SysUser>(entity,user);            
+            user = DtoMap.Map<DTOUser,SysUser>(entity,user);
             // 校验实体
+#if DEBUG
+            Console.WriteLine("校验实体");
+#endif             
             var validateResult = await Validator.ValidateAsync(user);
-            if (validateResult.ResultType == OperationResultType.Success)
-                return new OperationResult(OperationResultType.Failed, "用户不存在");
+            if (validateResult.ResultType != OperationResultType.Success)
+                return validateResult;
             //更新实体
+#if DEBUG
+            Console.WriteLine("更新实体");
+#endif             
+
             Repository.Update(user, AutoSaved);
             // 返回正确
             return new OperationResult(OperationResultType.Success);
@@ -158,7 +189,11 @@ namespace GanGao.BLL
             var user = Repository.Entities.SingleOrDefault(m => m.Name == userName);
             if (user == null)
             {
-                return Task.FromResult<OperationResult>(new OperationResult(OperationResultType.QueryNull, "指定账号的用户不存在。"));
+                return Task.FromResult<OperationResult>(
+                    new OperationResult(OperationResultType.QueryNull,
+                    String.Format(CultureInfo.CurrentCulture,
+                    Systems.SysResources.UserNoExist
+                    , userName)));
             }
             return Task.FromResult<OperationResult>(new OperationResult(OperationResultType.Success));
         }
@@ -170,12 +205,16 @@ namespace GanGao.BLL
         /// <returns></returns>
         public virtual Task<OperationResult> ExistsByEmailAsync(string emailName)
         {
-            PublicHelper.CheckArgument(emailName, "userName");
+            PublicHelper.CheckArgument(emailName, "emailName");
             //获取用户
             var user = Repository.Entities.SingleOrDefault(m => m.Email == emailName);
             if (user == null)
             {
-                return Task.FromResult<OperationResult>(new OperationResult(OperationResultType.QueryNull, "指定账号的用户不存在。"));
+                return Task.FromResult<OperationResult>(
+                    new OperationResult(OperationResultType.QueryNull,
+                    String.Format(CultureInfo.CurrentCulture,
+                    Systems.SysResources.EmailNotExist
+                    , emailName)));
             }
             return Task.FromResult<OperationResult>(new OperationResult(OperationResultType.Success));
         }
@@ -194,12 +233,20 @@ namespace GanGao.BLL
             var user = Repository.Entities.SingleOrDefault(m => m.Name == access || m.Email == access);
             if (user == null)
             {
-                return Task.FromResult<OperationResult>(new OperationResult(OperationResultType.QueryNull, "指定账号的用户不存在。"));
+                return Task.FromResult<OperationResult>(
+                    new OperationResult(OperationResultType.QueryNull,
+                    String.Format(CultureInfo.CurrentCulture,
+                    Systems.SysResources.UserNoExist
+                    , access)));
             }
             //校验密码
             if (PasswordValidator.VerifyHashedPassword(user.PasswordHash, password))
-                return Task.FromResult<OperationResult>(new OperationResult(OperationResultType.Success));
-            return Task.FromResult<OperationResult>(new OperationResult(OperationResultType.QueryNull, "指定账号的用户密码不正确。"));
+                return Task.FromResult<OperationResult>(
+                    new OperationResult(OperationResultType.Success));
+            return Task.FromResult<OperationResult>(
+                new OperationResult(OperationResultType.QueryNull,
+                String.Format(CultureInfo.CurrentCulture,
+                    Systems.SysResources.PasswordError)));
         }
         #endregion
 
@@ -293,24 +340,37 @@ namespace GanGao.BLL
         /// 获取指定页用户集合
         /// </summary>
         /// <param name="Index"></param>
-        /// <param name="Limit"></param>
+        /// <param name="limit"></param>
         /// <param name="Order"></param>
         /// <returns></returns>
-        public virtual Task<IEnumerable<DTOUser>> UserPageListAsync(int skip, int Limit, string Order)
+        public virtual Task<IEnumerable<DTOUser>> UserPageListAsync(int skip, int limit, string Order)
         {
             PublicHelper.CheckArgument(Order, "Order");
             PublicHelper.CheckArgument(skip, "Index",true);
             
-            PublicHelper.CheckArgument(Limit, "Limit");
+            PublicHelper.CheckArgument(limit, "Limit");
             //获取记录数
             var allCount = Repository.Entities.Count();
             // 计算跳过记录数
-            if (skip < 0 || skip > allCount || Limit<0)
-                return Task.FromResult <IEnumerable<DTOUser>>(null);
+#if DEBUG
+            Console.WriteLine("Skip={0}Limit={1}All={2}", skip, limit, allCount);
+#endif
+            if (skip < 0 || skip > allCount || limit < 1)
+            {
+                throw PublicHelper.ThrowBusinessException(
+                    String.Format(CultureInfo.CurrentCulture,
+                    Systems.SysResources.PageError,
+                    "跳过记录数大于总数或每页数小于1"));
+                //Console.WriteLine("Throw Exception Last {0}",
+                //    String.Format(CultureInfo.CurrentCulture,
+                //    Systems.SysResources.PageError,
+                //    "跳过记录数大于总数或每页数小于1"));
+                //return Task.FromResult<IEnumerable<DTOUser>>(null);
+            }
             // 获取排序查询
             var query = Repository.Entities.OrderBy(Order);
             // 获取分页数据
-            var users = query.Skip(skip).Take(Limit).ToList();
+            var users = query.Skip(skip).Take(limit).ToList();
             // 模型转换        
             return Task.FromResult<IEnumerable<DTOUser>>(DtoMap.Map<IEnumerable<DTOUser>>(users));
         }
@@ -319,6 +379,237 @@ namespace GanGao.BLL
         #region /////// 权限相关
 
         #endregion
+
+        #region //// 部门相关增删改
+        /// <summary>
+        /// 添加用户到部门中
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="departmentName"></param>
+        /// <returns></returns>
+        public async Task<OperationResult> AddDepartmentAsync(string userName,string departmentName)
+        {
+            ///获取用户
+            var user = Repository.Entities.FirstOrDefault(d => d.Name.Equals(userName));
+            if (user == null)
+                return await Task.FromResult<OperationResult>(
+                    new OperationResult(OperationResultType.ParamError,
+                    String.Format(CultureInfo.CurrentCulture,
+                    Systems.SysResources.UserNoExist
+                    , userName)));
+            ///获取部门
+            var department = departmentRepository.Entities.FirstOrDefault(d => d.Name.Equals(departmentName));
+            if(department==null)
+                return await Task.FromResult<OperationResult>(
+                    new OperationResult(OperationResultType.ParamError,
+                    String.Format(CultureInfo.CurrentCulture,
+                    Systems.SysResources.DepartmentNotExist
+                    , departmentName)));
+            //检查用户是否包含部门
+            var userDepartment = user.Departments.FirstOrDefault(d => d.DepartmentId.Equals(department.Id));
+            if(userDepartment!=null)
+                return await Task.FromResult<OperationResult>(
+                    new OperationResult(OperationResultType.ParamError,
+                    String.Format(CultureInfo.CurrentCulture,
+                    Systems.SysResources.UserInDepartment,
+                    userName, departmentName)));
+            ///添加部门
+            try
+            {
+                user.Departments.Add(new UserDepartment { UserId = user.Id, DepartmentId = department.Id });
+            }
+            catch(DataAccessException ex)
+            {
+                PublicHelper.ThrowBusinessException(ex.Message, ex);
+            }            
+            return await Task.FromResult<OperationResult>(new OperationResult(OperationResultType.Success));
+        }
+
+        /// <summary>
+        /// 移除用户从部门中
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="departmentName"></param>
+        /// <returns></returns>
+        public Task<OperationResult> RemoveDepartmentAsync(string userName, string departmentName)
+        {
+            ///获取用户
+            var user = Repository.Entities.FirstOrDefault(d => d.Name.Equals(userName));
+            if (user == null)
+                return Task.FromResult<OperationResult>(
+                    new OperationResult(OperationResultType.ParamError,
+                    String.Format(CultureInfo.CurrentCulture,
+                    Systems.SysResources.UserNoExist
+                    , userName)));
+            ///获取部门
+            var department = departmentRepository.Entities.FirstOrDefault(d => d.Name.Equals(departmentName));
+            if (department == null)
+                return Task.FromResult<OperationResult>(
+                    new OperationResult(OperationResultType.ParamError,
+                    String.Format(CultureInfo.CurrentCulture,
+                    Systems.SysResources.DepartmentNotExist
+                    , departmentName)));
+            //检查用户是否包含部门
+            var userDepartment = user.Departments.FirstOrDefault(d => d.DepartmentId.Equals(department.Id));
+            if (userDepartment == null)
+                return Task.FromResult<OperationResult>(
+                    new OperationResult(OperationResultType.ParamError,
+                    String.Format(CultureInfo.CurrentCulture,
+                    Systems.SysResources.UserNotInDepartment,
+                    userName, departmentName)));
+            ///移除部门
+            try
+            {
+                UserDepartmentRepository.Delete(userDepartment, AutoSaved);
+            }
+            catch (DataAccessException ex)
+            {
+                PublicHelper.ThrowBusinessException(ex.Message, ex);
+            }
+            return Task.FromResult<OperationResult>(new OperationResult(OperationResultType.Success));
+        }
+        #endregion
+
+        #region //// 角色相关
+        /// <summary>
+        /// 添加用户到部门中
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="departmentName"></param>
+        /// <returns></returns>
+        public Task<OperationResult> AddRoleAsync(string userName, string departmentName, string roleName)
+        {
+            ///获取用户
+            var user = Repository.Entities.FirstOrDefault(d => d.Name.Equals(userName));
+            if (user == null)
+                return Task.FromResult<OperationResult>(
+                    new OperationResult(OperationResultType.ParamError,
+                    String.Format(CultureInfo.CurrentCulture,
+                    Systems.SysResources.UserNoExist
+                    , userName)));
+            ///获取部门
+            var department = departmentRepository.Entities.FirstOrDefault(d => d.Name.Equals(departmentName));
+            if (department == null)
+                return Task.FromResult<OperationResult>(
+                    new OperationResult(OperationResultType.ParamError,
+                    String.Format(CultureInfo.CurrentCulture,
+                    Systems.SysResources.DepartmentNotExist
+                    , departmentName)));
+            //获取角色
+            var role = roleRepository.Entities.FirstOrDefault(d => d.Name.Equals(roleName));
+            if(role==null)
+                return Task.FromResult<OperationResult>(
+                    new OperationResult(OperationResultType.ParamError,
+                    String.Format(CultureInfo.CurrentCulture,
+                    Systems.SysResources.RoleNotExist
+                    , roleName)));
+            // 校验用户部门
+            var oldUserDepartment = UserDepartmentRepository.Entities.FirstOrDefault(
+                d => d.UserId.Equals(user.Id) &&
+                d.DepartmentId.Equals(department.Id));
+            if(oldUserDepartment==null)
+                return Task.FromResult<OperationResult>(
+                    new OperationResult(OperationResultType.ParamError,
+                    String.Format(CultureInfo.CurrentCulture,
+                    Systems.SysResources.UserNotInDepartment,
+                    userName, departmentName)));
+            ///校验用户部门角色
+            var oldUserDepartmentRole = UserDepartmentRoleRepository.Entities.FirstOrDefault(
+                d => d.UserId.Equals(user.Id) &&
+                d.DepartmentId.Equals(department.Id) &&
+                d.RoleId.Equals(role.Id));
+            if(oldUserDepartmentRole!=null)
+                return Task.FromResult<OperationResult>(
+                    new OperationResult(OperationResultType.ParamError,
+                    String.Format(CultureInfo.CurrentCulture,
+                    Systems.SysResources.UserInRole,
+                    userName, departmentName,roleName)));
+            ///保存            
+            try
+            {
+                UserDepartmentRoleRepository.Insert(new UserDepartmentRole
+                {
+                    UserId = user.Id,
+                    DepartmentId = department.Id,
+                    RoleId = role.Id
+                }, AutoSaved);
+            }
+            catch(DataAccessException ex)
+            {
+                return Task.FromResult<OperationResult>(new OperationResult(OperationResultType.Error, ex.Message));
+            }
+            
+            //成功
+            return Task.FromResult<OperationResult>(new OperationResult(OperationResultType.Success));
+        }
+
+        /// <summary>
+        /// 移除用户从部门中
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="departmentName"></param>
+        /// <returns></returns>
+        public Task<OperationResult> RemoveRoleAsync(string userName, string departmentName, string roleName)
+        {
+            ///获取用户
+            var user = Repository.Entities.FirstOrDefault(d => d.Name.Equals(userName));
+            if (user == null)
+                return Task.FromResult<OperationResult>(
+                    new OperationResult(OperationResultType.ParamError,
+                    String.Format(CultureInfo.CurrentCulture,
+                    Systems.SysResources.UserNoExist,
+                    userName)));
+            ///获取部门
+            var department = departmentRepository.Entities.FirstOrDefault(d => d.Name.Equals(departmentName));
+            if (department == null)
+                return Task.FromResult<OperationResult>(
+                    new OperationResult(OperationResultType.ParamError,
+                    String.Format(CultureInfo.CurrentCulture,
+                    Systems.SysResources.DepartmentNotExist,
+                    departmentName)));
+            //获取角色
+            var role = roleRepository.Entities.FirstOrDefault(d => d.Name.Equals(roleName));
+            if (role == null)
+                return Task.FromResult<OperationResult>(
+                    new OperationResult(OperationResultType.ParamError,
+                    String.Format(CultureInfo.CurrentCulture,
+                    Systems.SysResources.RoleNotExist,
+                    roleName)));
+            // 校验用户部门
+            var oldUserDepartment = UserDepartmentRepository.Entities.FirstOrDefault(
+                d => d.UserId.Equals(user.Id) &&
+                d.DepartmentId.Equals(department.Id));
+            if (oldUserDepartment == null)
+                return Task.FromResult<OperationResult>(
+                    new OperationResult(OperationResultType.ParamError,
+                    String.Format(CultureInfo.CurrentCulture,
+                    Systems.SysResources.UserNotInDepartment,
+                    userName, departmentName)));
+            ///校验用户部门角色
+            var oldUserDepartmentRole = UserDepartmentRoleRepository.Entities.FirstOrDefault(
+                d => d.UserId.Equals(user.Id) &&
+                d.DepartmentId.Equals(department.Id) &&
+                d.RoleId.Equals(role.Id));
+            if (oldUserDepartmentRole == null)
+                return Task.FromResult<OperationResult>(
+                    new OperationResult(OperationResultType.ParamError,
+                    String.Format(CultureInfo.CurrentCulture,
+                    Systems.SysResources.UserNotInRole,
+                    userName, departmentName, roleName)));
+            ///删除保存           
+            try
+            {
+                UserDepartmentRoleRepository.Delete(oldUserDepartmentRole, AutoSaved);
+            }
+            catch (DataAccessException ex)
+            {
+                PublicHelper.ThrowBusinessException(ex.Message, ex);
+            }            
+            //成功
+            return Task.FromResult<OperationResult>(new OperationResult(OperationResultType.Success));
+        }
+        #endregion
+
         #endregion
     }
 }

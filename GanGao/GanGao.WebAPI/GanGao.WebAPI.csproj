@@ -150,10 +150,17 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\APIBaseController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Models\UserDepartmentInput.cs" />
     <Compile Include="Models\PageInput.cs" />
+    <Compile Include="Models\UserRoleInput.cs" />
     <Compile Include="OAuthProvider\GanGaoAuthorizationServerProvider.cs" />
     <Compile Include="OAuthProvider\GanGaoRefreshTokenProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="StartupWebAPI.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -201,6 +208,12 @@
       <Project>{22646A41-C44D-46F8-AD44-ECEAD42C4171}</Project>
       <Name>GanGao.MEF</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

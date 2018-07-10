@@ -29,7 +29,7 @@ namespace GanGao.Common.DToModel.Systems
         /// <summary>
         /// 加密保存的密码
         /// </summary>
-        public string PasswordHash { get; set; }
+        public string Password { get; set; }
         /// <summary>
         /// 用户手机号码
         /// </summary>

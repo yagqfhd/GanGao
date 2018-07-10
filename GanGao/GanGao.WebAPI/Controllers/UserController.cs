@@ -7,6 +7,8 @@ using System.Web.Http;
 using System.Linq;
 using GanGao.WebAPI.Models;
 using GanGao.Common.DToModel.Systems;
+using System.Globalization;
+using GanGao.Common;
 
 namespace GanGao.WebAPI.Controllers
 {
@@ -55,10 +57,12 @@ namespace GanGao.WebAPI.Controllers
 #endif 
             if (string.IsNullOrWhiteSpace(id) == true) // 获取列表
             {
-                return BadRequest("参数错误");
+                return BadRequest(String.Format(CultureInfo.CurrentCulture,Resources.ParaError));
             }
             var DtoUser = await userService.FindUserAsync(id);
-            if (DtoUser == null) return BadRequest("用户不存在");
+            if (DtoUser == null) return BadRequest(
+                String.Format(CultureInfo.CurrentCulture,
+                Resources.EntityNotExist,"用户",id));
             return Ok(DtoUser);            
         }
         #endregion
@@ -77,19 +81,151 @@ namespace GanGao.WebAPI.Controllers
             //[FromUri]string username
 #endif 
             var skip = (page.page - 1) * page.limit;
-            var DtoUsers = await userService.UserPageListAsync(skip, page.limit, "Name");
-            if (DtoUsers == null || DtoUsers.Any() == false) return BadRequest("分页信息错误");
-            return Ok(DtoUsers);
+            try
+            {
+                var DtoUsers = await userService.UserPageListAsync(skip, page.limit, "Name");
+                return Ok(DtoUsers);
+            }
+            catch (BusinessException ex)
+            {
+                Console.WriteLine("UserControll Get BusinessException Ex");
+                return BadRequest(ex.Message);
+            }            
         }
         #endregion
 
         #region //// 添加用户
+        [Route("add"),HttpPost]
         public async Task<IHttpActionResult> add([FromBody] DTOUser user)
         {
+            #region /// 检查输入信息正确性
             if (!ModelState.IsValid)
                 return BadRequest(this.GetModelStateError(ModelState));
-            return Ok();
+            #endregion
+            // 调用服务创建用户
+            var result =await userService.CreateAsync(user);
+            // 根据服务返回值确定返回
+            if(result.ResultType == Common.OperationResultType.Success)
+                return Ok(true);
+            return BadRequest(result.Message);
         }
+        #endregion
+
+        #region //// 更新用户
+        [Route("update"), HttpPost]
+        public async Task<IHttpActionResult> update([FromBody] DTOUser user)
+        {
+            #region /// 检查输入信息正确性
+            if (!ModelState.IsValid)
+                return BadRequest(this.GetModelStateError(ModelState));
+            #endregion
+            // 调用服务创建用户
+            var result = await userService.UpdateAsync(user);
+            // 根据服务返回值确定返回
+            if (result.ResultType == Common.OperationResultType.Success)
+                return Ok(true);
+            return BadRequest(result.Message);
+        }
+        #endregion
+
+        #region //// 删除用户
+        [Route("remove"), HttpPost]
+        public async Task<IHttpActionResult> remove([FromBody] DTOUser user)
+        {
+            #region /// 检查输入信息正确性
+            if (!ModelState.IsValid)
+                return BadRequest(this.GetModelStateError(ModelState));
+            #endregion            
+            // 调用服务创建用户
+            var result = await userService.DeleteAsync(user.Name);
+            // 根据服务返回值确定返回
+            if (result.ResultType == Common.OperationResultType.Success)
+                return Ok(true);
+            return BadRequest(result.Message);
+        }
+        #endregion
+
+        #region //// 删除用户
+        [Route("delete/{username}"), HttpPost]
+        public async Task<IHttpActionResult> remove(string username)
+        {
+            #region /// 检查输入信息正确性
+            if (!ModelState.IsValid)
+                return BadRequest(this.GetModelStateError(ModelState));
+            #endregion            
+            // 调用服务创建用户
+            var result = await userService.DeleteAsync(username);
+            // 根据服务返回值确定返回
+            if (result.ResultType == Common.OperationResultType.Success)
+                return Ok(true);
+            return BadRequest(result.Message);
+        }
+        #endregion
+
+        #region //// 用户部门管理
+        [Route("Department/Add"), HttpPost]
+        public async Task<IHttpActionResult> addDepartment([FromBody] UserDepartmentInput add)
+        {
+            #region /// 检查输入信息正确性
+            if (!ModelState.IsValid)
+                return BadRequest(this.GetModelStateError(ModelState));
+            #endregion            
+            // 调用服务创建用户
+            var result = await userService.AddDepartmentAsync(add.UserName, add.DepartmentName);
+            // 根据服务返回值确定返回
+            if (result.ResultType == Common.OperationResultType.Success)
+                return Ok(true);
+            return BadRequest(result.Message);
+        }
+
+        [Route("Department/Remove"), HttpPost]
+        public async Task<IHttpActionResult> removeDepartment([FromBody] UserDepartmentInput add)
+        {
+            #region /// 检查输入信息正确性
+            if (!ModelState.IsValid)
+                return BadRequest(this.GetModelStateError(ModelState));
+            #endregion            
+            // 调用服务创建用户
+            var result = await userService.RemoveDepartmentAsync(add.UserName, add.DepartmentName);
+            // 根据服务返回值确定返回
+            if (result.ResultType == Common.OperationResultType.Success)
+                return Ok(true);
+            return BadRequest(result.Message);
+        }
+
+        #endregion
+
+        #region //// 用户部门角色管理
+        [Route("Role/Add"), HttpPost]
+        public async Task<IHttpActionResult> addRole([FromBody] UserRoleInput add)
+        {
+            #region /// 检查输入信息正确性
+            if (!ModelState.IsValid)
+                return BadRequest(this.GetModelStateError(ModelState));
+            #endregion            
+            // 调用服务创建用户
+            var result = await userService.AddRoleAsync(add.UserName, add.DepartmentName,add.RoleName);
+            // 根据服务返回值确定返回
+            if (result.ResultType == Common.OperationResultType.Success)
+                return Ok(true);
+            return BadRequest(result.Message);
+        }
+
+        [Route("Role/Remove"), HttpPost]
+        public async Task<IHttpActionResult> removeRole([FromBody] UserRoleInput add)
+        {
+            #region /// 检查输入信息正确性
+            if (!ModelState.IsValid)
+                return BadRequest(this.GetModelStateError(ModelState));
+            #endregion            
+            // 调用服务创建用户
+            var result = await userService.RemoveRoleAsync(add.UserName, add.DepartmentName,add.RoleName);
+            // 根据服务返回值确定返回
+            if (result.ResultType == Common.OperationResultType.Success)
+                return Ok(true);
+            return BadRequest(result.Message);
+        }
+
         #endregion
     }
 }

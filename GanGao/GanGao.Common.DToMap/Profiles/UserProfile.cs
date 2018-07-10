@@ -15,7 +15,7 @@ namespace GanGao.Common.DToMap.Profiles
                 .ForMember(d => d.Departments, m => m.Ignore())
                 .ForMember(d => d.PasswordHash, m => m.Ignore()); // 不转化密码
             CreateMap<SysUser, DTOUser>()
-                .ForMember(d=>d.PasswordHash , m=>m.Ignore()); // 不转化密码
+                .ForMember(d=>d.Password , m=>m.Ignore()); // 不转化密码
 
             CreateMap<UserDepartment, DtoUserDepartment>()
                 .ForMember(d => d.Name , mo => mo.MapFrom(dto => dto.Department.Name));
