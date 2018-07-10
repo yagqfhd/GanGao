@@ -19,21 +19,15 @@ namespace GanGao.BLL
     [Export(typeof(IUserService))]
     public class UserService : CoreServiceBase, IUserService
     {
-        public UserService() : base()
-        {
-            //AutoSaved = false;
-            /// MEF IoC映射
-            //RegisgterMEF.regisgter().ComposeParts(this);
-
-        }
-
-        #region 属性
+        #region ///////////属性
         /// <summary>
         /// 自动保存
         /// </summary>
         public bool AutoSaved { get; set; } = true;
 
-        #region 受保护的属性
+        #endregion
+
+        #region ////////////受保护的属性
 
         /// <summary>
         /// 获取或设置 用户信息数据访问对象
@@ -73,14 +67,12 @@ namespace GanGao.BLL
         /// </summary>
         [Import]
         IDtoMapService DtoMap { get; set; }
-       
+
         /// <summary>
         /// 密码校验生成对象
         /// </summary>
         [Import]
         IPasswordValidator PasswordValidator { get; set; }
-        #endregion
-
         #endregion
 
         #region 方法实现
@@ -128,9 +120,17 @@ namespace GanGao.BLL
                     new OperationResult(OperationResultType.Warning,
                     String.Format(CultureInfo.CurrentCulture, 
                     Systems.SysResources.UserNoExist
-                    ,name)));                
-            // 从实体集合删除
-            Repository.Delete(user.Id, AutoSaved);
+                    ,name)));
+            try
+            {
+                // 从实体集合删除
+                Repository.Delete(user.Id, AutoSaved);
+            }   
+            catch(DataAccessException ex)
+            {
+                return Task.FromResult<OperationResult>(
+                    new OperationResult(OperationResultType.Error, ex.Message));
+            }                         
             // 返回正确
             return Task.FromResult<OperationResult>(new OperationResult(OperationResultType.Success));
         }
@@ -145,10 +145,6 @@ namespace GanGao.BLL
             //校验参数！=NULL
             PublicHelper.CheckArgument(entity, "entity");
             // 获取用户
-
-#if DEBUG
-            Console.WriteLine("获取用户");
-#endif 
             var user = Repository.Entities.SingleOrDefault(m => m.Name.Equals(entity.Name));
             if (user == null)
                 return new OperationResult(OperationResultType.Warning, 
@@ -157,19 +153,20 @@ namespace GanGao.BLL
                     , entity.Name));
             // 实体模型转换
             user = DtoMap.Map<DTOUser,SysUser>(entity,user);
-            // 校验实体
-#if DEBUG
-            Console.WriteLine("校验实体");
-#endif             
+            // 校验实体        
             var validateResult = await Validator.ValidateAsync(user);
             if (validateResult.ResultType != OperationResultType.Success)
                 return validateResult;
-            //更新实体
-#if DEBUG
-            Console.WriteLine("更新实体");
-#endif             
-
-            Repository.Update(user, AutoSaved);
+            try
+            {
+                //更新实体
+                Repository.Update(user, AutoSaved);
+            }
+            catch(DataAccessException ex)
+            {
+                return await Task.FromResult<OperationResult>(
+                    new OperationResult(OperationResultType.Error, ex.Message));
+            }
             // 返回正确
             return new OperationResult(OperationResultType.Success);
         }
@@ -267,7 +264,7 @@ namespace GanGao.BLL
             return Task.FromResult<DTOUser>(DtoMap.Map<DTOUser>(user));
         }
         /// <summary>
-        /// 按照名次查询用户
+        /// 按照名称查询用户
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
@@ -346,33 +343,31 @@ namespace GanGao.BLL
         public virtual Task<IEnumerable<DTOUser>> UserPageListAsync(int skip, int limit, string Order)
         {
             PublicHelper.CheckArgument(Order, "Order");
-            PublicHelper.CheckArgument(skip, "Index",true);
-            
+            PublicHelper.CheckArgument(skip, "Index",true);            
             PublicHelper.CheckArgument(limit, "Limit");
             //获取记录数
             var allCount = Repository.Entities.Count();
             // 计算跳过记录数
-#if DEBUG
-            Console.WriteLine("Skip={0}Limit={1}All={2}", skip, limit, allCount);
-#endif
             if (skip < 0 || skip > allCount || limit < 1)
             {
                 throw PublicHelper.ThrowBusinessException(
                     String.Format(CultureInfo.CurrentCulture,
                     Systems.SysResources.PageError,
-                    "跳过记录数大于总数或每页数小于1"));
-                //Console.WriteLine("Throw Exception Last {0}",
-                //    String.Format(CultureInfo.CurrentCulture,
-                //    Systems.SysResources.PageError,
-                //    "跳过记录数大于总数或每页数小于1"));
-                //return Task.FromResult<IEnumerable<DTOUser>>(null);
+                    "跳过记录数大于总数或每页数小于1"));                
             }
-            // 获取排序查询
-            var query = Repository.Entities.OrderBy(Order);
-            // 获取分页数据
-            var users = query.Skip(skip).Take(limit).ToList();
-            // 模型转换        
-            return Task.FromResult<IEnumerable<DTOUser>>(DtoMap.Map<IEnumerable<DTOUser>>(users));
+            try
+            {
+                // 获取排序查询
+                var query = Repository.Entities.OrderBy(Order);
+                // 获取分页数据
+                var users = query.Skip(skip).Take(limit).ToList();
+                // 模型转换        
+                return Task.FromResult<IEnumerable<DTOUser>>(DtoMap.Map<IEnumerable<DTOUser>>(users));
+            }
+            catch(DataAccessException ex)
+            {
+                throw PublicHelper.ThrowBusinessException(ex.Message, ex);
+            }
         }
         #endregion
 
@@ -420,7 +415,8 @@ namespace GanGao.BLL
             }
             catch(DataAccessException ex)
             {
-                PublicHelper.ThrowBusinessException(ex.Message, ex);
+                return await Task.FromResult<OperationResult>(
+                    new OperationResult(OperationResultType.Error, ex.Message));
             }            
             return await Task.FromResult<OperationResult>(new OperationResult(OperationResultType.Success));
         }
@@ -464,7 +460,8 @@ namespace GanGao.BLL
             }
             catch (DataAccessException ex)
             {
-                PublicHelper.ThrowBusinessException(ex.Message, ex);
+                return Task.FromResult<OperationResult>(
+                    new OperationResult(OperationResultType.Error, ex.Message));
             }
             return Task.FromResult<OperationResult>(new OperationResult(OperationResultType.Success));
         }
@@ -536,7 +533,8 @@ namespace GanGao.BLL
             }
             catch(DataAccessException ex)
             {
-                return Task.FromResult<OperationResult>(new OperationResult(OperationResultType.Error, ex.Message));
+                return Task.FromResult<OperationResult>(
+                    new OperationResult(OperationResultType.Error, ex.Message));
             }
             
             //成功
@@ -603,7 +601,8 @@ namespace GanGao.BLL
             }
             catch (DataAccessException ex)
             {
-                PublicHelper.ThrowBusinessException(ex.Message, ex);
+                return Task.FromResult<OperationResult>(
+                    new OperationResult(OperationResultType.Error, ex.Message));
             }            
             //成功
             return Task.FromResult<OperationResult>(new OperationResult(OperationResultType.Success));

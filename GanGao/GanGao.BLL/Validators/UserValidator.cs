@@ -1,4 +1,5 @@
-﻿using GanGao.Common;
+﻿using GanGao.BLL.Systems;
+using GanGao.Common;
 using GanGao.Common.Model.Systems;
 using GanGao.IBLL.Systems;
 using GanGao.IDAL.ISystems;
@@ -44,13 +45,22 @@ namespace GanGao.BLL.Validators
                     if(!EqualityComparer<string>.Default.Equals(user.Id, item.Id))
                     {
                         if (user.Name.Equals(item.Name))
-                            return new OperationResult(OperationResultType.Failed, String.Format(CultureInfo.CurrentCulture, "{0}:用户名重名错误", item.Name));
+                            return new OperationResult(OperationResultType.Failed,
+                                String.Format(CultureInfo.CurrentCulture,
+                                SysResources.DuplicationName, "角色",
+                                item.Name));
                         else if (user.Email.Equals(item.Email))
-                            return new OperationResult(OperationResultType.Failed, String.Format(CultureInfo.CurrentCulture, "{0}:Email重复错误", item.Email));
+                            return new OperationResult(OperationResultType.Failed, 
+                                String.Format(CultureInfo.CurrentCulture,
+                                SysResources.DuplicationName,"用户Email", item.Email));
                         else if (user.Nick.Equals(item.Nick))
-                            return new OperationResult(OperationResultType.Failed, String.Format(CultureInfo.CurrentCulture, "{0}:昵称重名错误", item.Nick));
+                            return new OperationResult(OperationResultType.Failed, 
+                                String.Format(CultureInfo.CurrentCulture,
+                                SysResources.DuplicationName,"昵称", item.Nick));
                         else
-                            return new OperationResult(OperationResultType.Failed, String.Format(CultureInfo.CurrentCulture, "{0}:姓名重名错误", item.TrueName));
+                            return new OperationResult(OperationResultType.Failed, 
+                                String.Format(CultureInfo.CurrentCulture,
+                                SysResources.DuplicationName,"真实姓名", item.TrueName));
                     }
                 }
                 

@@ -57,7 +57,9 @@ namespace GanGao.WebAPI.Controllers
 #endif 
             if (string.IsNullOrWhiteSpace(id) == true) // 获取列表
             {
-                return BadRequest(String.Format(CultureInfo.CurrentCulture,Resources.ParaError));
+                return BadRequest(
+                    String.Format(CultureInfo.CurrentCulture,
+                    Resources.ParaError));
             }
             var DtoUser = await userService.FindUserAsync(id);
             if (DtoUser == null) return BadRequest(
@@ -102,12 +104,25 @@ namespace GanGao.WebAPI.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(this.GetModelStateError(ModelState));
             #endregion
-            // 调用服务创建用户
-            var result =await userService.CreateAsync(user);
-            // 根据服务返回值确定返回
-            if(result.ResultType == Common.OperationResultType.Success)
-                return Ok(true);
-            return BadRequest(result.Message);
+            //OperationResult result;
+            try
+            {
+                // 调用服务创建用户
+                var result = await userService.CreateAsync(user);
+                // 根据服务返回值确定返回
+                if (result.ResultType == Common.OperationResultType.Success)
+                    return Ok(true);
+                return BadRequest(result.Message);
+            }
+            catch (BusinessException ex)
+            {
+                return BadRequest(ex.Message);
+
+            }
+            catch(ComponentException ex)
+            {
+                return BadRequest(ex.Message);
+            }            
         }
         #endregion
 

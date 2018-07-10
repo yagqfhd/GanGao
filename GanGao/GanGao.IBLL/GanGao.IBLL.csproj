@@ -79,6 +79,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ICoreService.cs" />
+    <Compile Include="Systems\IDepartmentService.cs" />
+    <Compile Include="Systems\IRoleService.cs" />
     <Compile Include="Systems\IUserService.cs" />
     <Compile Include="Systems\IValidator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

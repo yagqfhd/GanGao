@@ -70,6 +70,24 @@ namespace GanGao.BLL.Systems {
         }
         
         /// <summary>
+        ///   查找类似 部门[{0}]的上级部门已经是[{1}]。 的本地化字符串。
+        /// </summary>
+        internal static string DepartmentParentIsExist {
+            get {
+                return ResourceManager.GetString("DepartmentParentIsExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 {0}:[{1}]存在重名。 的本地化字符串。
+        /// </summary>
+        internal static string DuplicationName {
+            get {
+                return ResourceManager.GetString("DuplicationName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Email:[{0}]的用户不存在 的本地化字符串。
         /// </summary>
         internal static string EmailNotExist {

@@ -120,6 +120,12 @@
   <data name="DepartmentNotExist" xml:space="preserve">
     <value>名称:[{0}]的部门不存在。</value>
   </data>
+  <data name="DepartmentParentIsExist" xml:space="preserve">
+    <value>部门[{0}]的上级部门已经是[{1}]。</value>
+  </data>
+  <data name="DuplicationName" xml:space="preserve">
+    <value>{0}:[{1}]存在重名。</value>
+  </data>
   <data name="EmailNotExist" xml:space="preserve">
     <value>Email:[{0}]的用户不存在</value>
   </data>
