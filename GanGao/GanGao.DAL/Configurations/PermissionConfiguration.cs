@@ -20,7 +20,7 @@ namespace GanGao.DAL.Configurations
             this.HasIndex(m => m.Name);    
             //属性定义
             this.Property(m => m.Id).HasMaxLength(64);
-            this.Property(m => m.Name).HasMaxLength(16);            
+            this.Property(m => m.Name).HasMaxLength(128);            
             this.Property(m => m.Description).HasMaxLength(128);
             
             //// 排除字段定义

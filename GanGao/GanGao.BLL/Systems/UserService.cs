@@ -610,5 +610,23 @@ namespace GanGao.BLL
         #endregion
 
         #endregion
+
+        #region //////权限验证相关
+        /// <summary>
+        /// 获取用户具有的权限验证特征串
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public virtual  Task<IEnumerable<string>> GetDepartmentRoleListAsync(string name)
+        {
+            PublicHelper.CheckArgument(name, "userName");
+            // 获取用户
+            var user = Repository.Entities.FirstOrDefault(d => d.Name.Equals(name));
+            if (user == null) return Task.FromResult<IEnumerable<string>>(new List<string>());
+            //根据用户ID获取验证特征串 （部门ID+角色ID）
+            var results = UserDepartmentRoleRepository.Entities.Where(d => d.UserId.Equals(user.Id)).Select(v=>v.DepartmentId+v.RoleId);
+            return Task.FromResult<IEnumerable<string>>(results.ToList());
+        }
+        #endregion
     }
 }

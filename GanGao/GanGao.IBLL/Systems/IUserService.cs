@@ -1,5 +1,6 @@
 ﻿using GanGao.Common;
 using GanGao.Common.DToModel.Systems;
+using GanGao.Common.Model.Systems;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -126,6 +127,15 @@ namespace GanGao.IBLL.Systems
         Task<OperationResult> RemoveRoleAsync(string userName, string departmentName, string roleName);
         #endregion
 
+        #endregion
+
+        #region /////// 权限验证相关
+        /// <summary>
+        /// 获取用户具有的权限验证特征串
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        Task<IEnumerable<string>> GetDepartmentRoleListAsync(string name);
         #endregion
     }
 }

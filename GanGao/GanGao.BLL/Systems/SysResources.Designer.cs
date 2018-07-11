@@ -124,6 +124,51 @@ namespace GanGao.BLL.Systems {
         }
         
         /// <summary>
+        ///   查找类似 权限:[{0}]已经存在部门：[{1}]中。 的本地化字符串。
+        /// </summary>
+        internal static string PermissionInDepartment {
+            get {
+                return ResourceManager.GetString("PermissionInDepartment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 权限:[{0}]已经存在部门角色：[{1}=&gt;{2}]中。 的本地化字符串。
+        /// </summary>
+        internal static string PermissionInRole {
+            get {
+                return ResourceManager.GetString("PermissionInRole", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 权限名:[ {0} ]的权限不存在。 的本地化字符串。
+        /// </summary>
+        internal static string PermissionNotExist {
+            get {
+                return ResourceManager.GetString("PermissionNotExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 权限:[{0}]不在部门：[{1}]中。 的本地化字符串。
+        /// </summary>
+        internal static string PermissionNotInDepartment {
+            get {
+                return ResourceManager.GetString("PermissionNotInDepartment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 权限:[{0}]不在部门角色：[{1}=&gt;{2}]中。 的本地化字符串。
+        /// </summary>
+        internal static string PermissionNotInRole {
+            get {
+                return ResourceManager.GetString("PermissionNotInRole", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 名称:[{0}]的角色不存在。 的本地化字符串。
         /// </summary>
         internal static string RoleNotExist {

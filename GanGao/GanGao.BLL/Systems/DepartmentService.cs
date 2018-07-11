@@ -152,19 +152,41 @@ namespace GanGao.BLL.Systems
         #endregion
 
         /// <summary>
+        /// 按照名称查询
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public virtual Task<DTODepartment> FindByNameAsync(string name)
+        {
+            PublicHelper.CheckArgument(name, "name");
+            var role = Repository.Entities.SingleOrDefault(m => m.Name.Equals(name));
+            if (role == null)
+            {
+                return Task.FromResult<DTODepartment>(null);
+            }
+            return Task.FromResult<DTODepartment>(DtoMap.Map<DTODepartment>(role));
+        }
+
+        /// <summary>
         /// 获取指定页集合
         /// </summary>
         /// <param name="Index"></param>
         /// <param name="Limit"></param>
         /// <param name="Order"></param>
         /// <returns></returns>
-        public virtual Task<IEnumerable<DTODepartment>> PageListAsync(int skip, int limit, string order)
+        public virtual Task<IEnumerable<DTODepartment>> PageListAsync(int skip, int limit, string order,string parent = null)
         {
             PublicHelper.CheckArgument(order, "Order");
             PublicHelper.CheckArgument(skip, "Skip", true);
             PublicHelper.CheckArgument(limit, "Limit");
+
+            var queryAll = Repository.Entities;
+            if (string.IsNullOrWhiteSpace(parent) == false)
+                queryAll = queryAll.Where(d => d.Parent.Name.Equals(parent));
+            else
+                queryAll = queryAll.Where(d => d.Parent == null);
             //获取记录数
-            var allCount = Repository.Entities.Count();
+            var allCount = queryAll.Count();
             // 计算跳过记录数
             if (skip < 0 || skip > allCount || limit < 1)
             {
@@ -176,7 +198,7 @@ namespace GanGao.BLL.Systems
             try
             {
                 // 获取排序查询
-                var query = Repository.Entities.OrderBy(order);
+                var query = queryAll.OrderBy(order);
                 // 获取分页数据
                 var users = query.Skip(skip).Take(limit).ToList();
                 // 模型转换        
@@ -188,6 +210,7 @@ namespace GanGao.BLL.Systems
             }
         }
 
+        
         /// <summary>
         /// 设置部门的上级部门
         /// </summary>

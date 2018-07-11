@@ -149,8 +149,14 @@
     <Compile Include="App_Start\MefDependencySolver.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\APIBaseController.cs" />
+    <Compile Include="Controllers\DepartmentController.cs" />
+    <Compile Include="Controllers\PermissionController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Models\DepartmentPageInput.cs" />
+    <Compile Include="Models\DepartmentParentInput.cs" />
+    <Compile Include="Models\PermissionDepartmentInput.cs" />
+    <Compile Include="Models\PermissionRoleInput.cs" />
     <Compile Include="Models\UserDepartmentInput.cs" />
     <Compile Include="Models\PageInput.cs" />
     <Compile Include="Models\UserRoleInput.cs" />

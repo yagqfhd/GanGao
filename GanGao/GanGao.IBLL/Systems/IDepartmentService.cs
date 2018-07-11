@@ -18,8 +18,15 @@ namespace GanGao.IBLL.Systems
         /// <param name="Limit"></param>
         /// <param name="Order"></param>
         /// <returns></returns>
-        Task<IEnumerable<DTODepartment>> PageListAsync(int Skip, int Limit, string Order);
+        Task<IEnumerable<DTODepartment>> PageListAsync(int Skip, int Limit, string Order, string parent = null);
         #endregion
+
+        /// <summary>
+        /// 按照名次查询
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        Task<DTODepartment> FindByNameAsync(string name);
         /// <summary>
         /// 设置部门的上级部门
         /// </summary>

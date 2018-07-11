@@ -23,13 +23,7 @@ namespace GanGao.DAL.Initialize
         //[Export(typeof(Func<>))]
         public static void Initialize()
         {
-#if DEBUG
-            Console.WriteLine("开始 Database init...");
-#endif 
             if (Database.Exists("default")) return;
-#if DEBUG
-            Console.WriteLine("开始 Database init...OKKK");
-#endif 
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<EFDbContext, Configuration>());            
         }
     }

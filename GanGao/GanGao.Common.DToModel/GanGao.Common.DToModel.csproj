@@ -80,9 +80,12 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Systems\DTODepartment.cs" />
+    <Compile Include="Systems\DTOPermission.cs" />
     <Compile Include="Systems\DTORole.cs" />
     <Compile Include="Systems\DtoUser.cs" />
+    <Compile Include="Systems\DtoPermissionDepartment.cs" />
     <Compile Include="Systems\DtoUserDepartment.cs" />
+    <Compile Include="Systems\DtoPermissionDepartmentRole.cs" />
     <Compile Include="Systems\DtoUserDepartmentRole.cs" />
   </ItemGroup>
   <ItemGroup />

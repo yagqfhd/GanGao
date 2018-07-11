@@ -14,6 +14,9 @@ namespace GanGao.Common.Model.Systems
         IPermission<string>,
         IEntityDepartmentCollection<PermissionDepartment>
     {
+        public string ControllerName { get; set; }
+        public string ActionName { get; set; }
+        public string Parameters { get; set; }
         /// <summary>
         /// 权限部门集合
         /// </summary>

@@ -16,20 +16,8 @@ namespace GanGao.WebAPI
     /// </summary>
     public class MefDependencySolver :  IDependencyResolver
     {
-        private readonly ComposablePartCatalog _catalog;
-        private static CompositionContainer _compositionContainer=null;
         public MefDependencySolver()//(ComposablePartCatalog catalog)
         {
-            //_catalog = catalog;
-#if DEBUG
-            
-            //_compositionContainer = new CompositionContainer(_catalog, CompositionOptions.DisableSilentRejection);
-            Console.WriteLine("MefDependncySolver Create");
-#else
-            _compositionContainer = new CompositionContainer(_catalog);
-#endif
-            //_compositionContainer = new CompositionContainer(_catalog, CompositionOptions.DisableSilentRejection);
-
         }
         /// <summary>
         /// Container
@@ -38,20 +26,6 @@ namespace GanGao.WebAPI
         {
             get
             {
-
-                //#if DEBUG
-                //Console.WriteLine("Get CompositionContainer Container ={0}", _compositionContainer == null);
-                //#endif 
-                //                if(_compositionContainer==null)
-                //                {
-                //#if DEBUG
-                //                    _compositionContainer = new CompositionContainer(_catalog, CompositionOptions.DisableSilentRejection);
-                //                    Console.WriteLine("MefDependncySolver Create");
-                //#else
-                //                    _compositionContainer = new CompositionContainer(_catalog);
-                //#endif
-                //                }
-                // return _compositionContainer;
                 return RegisgterMEF.regisgter();
             }
         }
@@ -67,10 +41,6 @@ namespace GanGao.WebAPI
         {
                 string contractName = AttributedModelServices.GetContractName(serviceType);
                 var result = Container.GetExportedValueOrDefault<object>(contractName);
-                
-#if DEBUG
-                Console.WriteLine("Solver GetService One typeContract {0} = {1}", contractName, result == null ? "null" : result.ToString());
-#endif
                 return result;
         }
 
@@ -81,13 +51,8 @@ namespace GanGao.WebAPI
         /// <returns></returns>
         public IEnumerable<object> GetServices(Type serviceType)
         {
-            //Console.WriteLine("Solver GetService ALL typeContract");
-            //var contractName = serviceType.FullName;
             var contractName = AttributedModelServices.GetContractName(serviceType);
             var result =  Container.GetExportedValues<object>(contractName);
-#if DEBUG
-            Console.WriteLine("Solver GetService List typeContract {0} = {1}", contractName, result == null ? "null" : result.ToString());
-#endif
             return result;
         }
 
@@ -97,20 +62,13 @@ namespace GanGao.WebAPI
         /// <returns></returns>
         public IDependencyScope BeginScope()
         {
-            //return new MefDependencySolver(_catalog);
-#if DEBUG
-            Console.WriteLine("BeginScope()");
-#endif
             return this;
-            //return new MefDependencySolver(_catalog);
         }
 
         #endregion
 
         public void Dispose()
         {
-            //ToDo
-            //Dispose(true);
             GC.SuppressFinalize(this);
         }
     }
@@ -120,20 +78,7 @@ namespace GanGao.WebAPI
 
         public static void RegisterMef(HttpConfiguration cfg)
         {
-#if DEBUG
-            Console.WriteLine("RegisterMef....cfg");
-#endif
-            //AggregateCatalog aggregateCatalog = new AggregateCatalog();
-            //string path = AppDomain.CurrentDomain.BaseDirectory;
-            //var thisAssembly = new DirectoryCatalog(path, "*.dll");
-            //if (thisAssembly.Count() == 0)
-            //{
-            //    path = path + "bin\\";
-            //    thisAssembly = new DirectoryCatalog(path, "*.dll");
-            //}
-            //aggregateCatalog.Catalogs.Add(thisAssembly);
-
-            var resolver = new MefDependencySolver(); // new MefDependencySolver(aggregateCatalog);
+            var resolver = new MefDependencySolver();
             // Install MEF dependency resolver for MVC
             //DependencyResolver.SetResolver(resolver);
             // Install MEF dependency resolver for Web API

@@ -92,6 +92,7 @@
     <Compile Include="Configurations\PermissionConfiguration.cs" />
     <Compile Include="Configurations\RoleConfiguration.cs" />
     <Compile Include="Configurations\UserConfiguration.cs" />
+    <Compile Include="Initialize\AutoCreatePermissions.cs" />
     <Compile Include="Initialize\DatabaseInitializer.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

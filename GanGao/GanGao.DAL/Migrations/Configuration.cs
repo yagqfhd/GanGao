@@ -1,12 +1,14 @@
 ﻿using GanGao.Common;
 using GanGao.Common.Data;
 using GanGao.Common.Model.Systems;
+using GanGao.DAL.Initialize;
 using GanGao.MEF;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web;
 
@@ -37,10 +39,8 @@ namespace GanGao.DAL.Migrations
         {
             if(PasswordValidator==null)
             {
-                Console.WriteLine("Self Load ComposeParts");
                 RegisgterMEF.regisgter().ComposeParts(this);
             }
-            Console.WriteLine(context.Database.Connection.DataSource);     
             if (PasswordValidator != null)
                 _defaultPassword = PasswordValidator.HashPassword("123456");
             #region /// 初始化角色
@@ -124,7 +124,25 @@ namespace GanGao.DAL.Migrations
 
             #endregion
             /// 初始化权限
-
+            /// 
+            Console.WriteLine("开始初始化权限");
+            var permissions = AutoCreatePermissions.GetPermissions("APIBaseController", "GanGao.WebAPI");
+            Console.WriteLine("获取权限数量:{0}",permissions.Count);
+            DbSet<SysPermission> permissionSet = context.Set<SysPermission>();
+            permissionSet.AddOrUpdate(m => new { m.Name }, permissions.ToArray());
+            try
+            {
+                context.SaveChanges();
+            }
+            catch (DbEntityValidationException ex)
+            {
+                ex.EntityValidationErrors.ToList().ForEach((err) => {
+                    err.ValidationErrors.ToList().ForEach((ve) => {
+                        Console.WriteLine("PropertyName:{0},Msg={1}", ve.PropertyName, ve.ErrorMessage);
+                    });
+                });
+            }
+            
         }
     }
 }

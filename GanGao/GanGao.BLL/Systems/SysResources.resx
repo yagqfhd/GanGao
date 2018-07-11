@@ -138,6 +138,21 @@
   <data name="PasswordNullError" xml:space="preserve">
     <value>密码是必须的，空错误。</value>
   </data>
+  <data name="PermissionInDepartment" xml:space="preserve">
+    <value>权限:[{0}]已经存在部门：[{1}]中。</value>
+  </data>
+  <data name="PermissionInRole" xml:space="preserve">
+    <value>权限:[{0}]已经存在部门角色：[{1}=&gt;{2}]中。</value>
+  </data>
+  <data name="PermissionNotExist" xml:space="preserve">
+    <value>权限名:[ {0} ]的权限不存在。</value>
+  </data>
+  <data name="PermissionNotInDepartment" xml:space="preserve">
+    <value>权限:[{0}]不在部门：[{1}]中。</value>
+  </data>
+  <data name="PermissionNotInRole" xml:space="preserve">
+    <value>权限:[{0}]不在部门角色：[{1}=&gt;{2}]中。</value>
+  </data>
   <data name="RoleNotExist" xml:space="preserve">
     <value>名称:[{0}]的角色不存在。</value>
   </data>

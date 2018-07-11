@@ -4,6 +4,7 @@ using GanGao.IBLL.Systems;
 using GanGao.WebAPI.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.Composition;
 using System.Globalization;
 using System.Linq;
@@ -14,6 +15,9 @@ using System.Web.Http;
 
 namespace GanGao.WebAPI.Controllers
 {
+    /// <summary>
+    /// 角色管理
+    /// </summary>
     [Export]
     [PartCreationPolicy(CreationPolicy.NonShared)]
     [RoutePrefix("Api/Role")]
@@ -33,6 +37,7 @@ namespace GanGao.WebAPI.Controllers
         /// <param name="id">用户名</param>
         /// <returns>用户信息</returns>
         [Route("one"), HttpGet]
+        [Description("获取一个角色信息")]
         public async Task<IHttpActionResult> one(string id)
         {
             if (string.IsNullOrWhiteSpace(id) == true) // 获取列表
@@ -51,9 +56,15 @@ namespace GanGao.WebAPI.Controllers
 
         #region /// 获取分页列表
         [Route("page"), HttpPost] // {index:int}/{page:int}
+        [Description("角色分页列表")]
         public async Task<IHttpActionResult> page([FromBody]PageInput page)
         {
+            #region /// 检查输入信息正确性
+            if (!ModelState.IsValid)
+                return BadRequest(this.GetModelStateError(ModelState));
+            #endregion
             var skip = (page.page - 1) * page.limit;
+            Console.WriteLine("SKip={0},Limit={1}", skip, page.limit);
             try
             {
                 var DtoRoles = await Service.PageListAsync(skip, page.limit, "Name");
@@ -68,6 +79,7 @@ namespace GanGao.WebAPI.Controllers
 
         #region //// 添加
         [Route("add"), HttpPost]
+        [Description("添加角色")]
         public async Task<IHttpActionResult> add([FromBody] DTORole role)
         {
             #region /// 检查输入信息正确性
@@ -97,6 +109,7 @@ namespace GanGao.WebAPI.Controllers
 
         #region //// 更新
         [Route("update"), HttpPost]
+        [Description("修改角色")]
         public async Task<IHttpActionResult> update([FromBody] DTORole role)
         {
             #region /// 检查输入信息正确性
@@ -126,6 +139,7 @@ namespace GanGao.WebAPI.Controllers
 
         #region //// 删除
         [Route("remove"), HttpPost]
+        [Description("删除角色")]
         public async Task<IHttpActionResult> remove([FromBody] DTORole role)
         {
             #region /// 检查输入信息正确性
@@ -154,7 +168,8 @@ namespace GanGao.WebAPI.Controllers
         #endregion
 
         #region //// 删除
-        [Route("delete/{name}"), HttpPost]
+        [Route("delete"), HttpGet]
+        [Description("删除角色")]
         public async Task<IHttpActionResult> remove(string name)
         {
             #region /// 检查输入信息正确性
