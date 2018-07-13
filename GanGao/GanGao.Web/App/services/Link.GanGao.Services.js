@@ -1,9 +1,9 @@
 ﻿(function () {
     //创建一个 angularjs 服务模块
-    var service = angular.module("GanGao.Services");
+    var app = angular.module("GanGao.Services");
 
     // 为模块创建一个名为linkService服务，linkService返回一个列表对象
-    service.factory("linkService", [function () {
+    app.factory("linkService", [function () {
         // 定义links为数组类型
         var links = [];
         links.push({

@@ -1,23 +1,21 @@
 ﻿'use strict';
 
 (function () {
-    var service = angular.module('GanGao.Services', []);
+    var app = angular.module('GanGao.Services',[]);
 
-    service.factory("http", ['$http', '$modal', 'utils', 'language', function ($http, $modal, utils, language) {
-        var lang = language(true);
-
+    app.factory("http", ['$http', '$uibModal', function ($http, $uibModal) {
         var methods = {
             'call': function (type, url, params, data) {
-                return $http({ method: type, url: url, params: params, data: data }).success(methods.success).error(methods.errorModal);
+                return $http({ method: type, url: url, params: params, data: data, headers: "Content-Type:application/x-www-form-urlencoded" })
+                    .then(methods.success)
+                    .catch(methods.errorModal);
             },
             'success': function (data) {
-                if (data.Message)
-                    utils.confirm({ msg: lang[data.Message], ok: lang.ok });
-                return data;
+                return data.data;
             },
             'errorModal': function (data) {
-                $modal.open({
-                    templateUrl: 'utils-errorModal ',
+                $uibModal.open({
+                    templateUrl: '/app/views/utils/errorModal.html',
                     backdrop: "static",
                     controller: "errorModal",
                     resolve: {
@@ -26,6 +24,7 @@
                         }
                     }
                 });
+                //console.dir(data);
             },
             'get': function (url, params) {
                 return methods.call('GET', url, params);

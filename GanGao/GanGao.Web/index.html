@@ -10,10 +10,10 @@
     <link href="/App/styles/site.css" rel="stylesheet" />
     <!-- 基本JS导入 -->
     <script src="/Scripts/jquery-3.3.1.js"></script>
-    <script src="/Scripts/angular.js"></script>
-    <script src="/Scripts/angular-route.js"></script>
     <script src="/Scripts/bootstrap.js"></script>
-    <script src="Scripts/angular-ui/ui-bootstrap-tpls.js"></script>
+    <script src="/Scripts/angular.js"></script>
+    <script src="/Scripts/angular-route.js"></script>    
+    <script src="/Scripts/angular-ui/ui-bootstrap-tpls.js"></script>
     <script src="/Scripts/bootstrap-notify.js"></script>
 </head>
 <body ng-controller="navigation">
@@ -29,7 +29,7 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-left">
-                    <li ng-repeat="item in ls">
+                    <li class="{{item.isActive?'active':''}}" ng-repeat="item in ls">
                         <a href="#{{item.urls}}">{{item.name}}</a>
                     </li>
                 </ul>
@@ -37,22 +37,32 @@
             </div>
         </div>
     </div>
-    <div class="container body-content">       
+    <div class="container body-content">  
+        <div class="row">
+            <div class="col-md-12" ng-view></div>  
+        </div>   
+    </div>
+    <div class="container container-fluid">
         <hr />
         <footer>
             <p>&copy; @DateTime.Now.Year - 我的 ASP.NET 应用程序</p>
         </footer>
-    </div>
-
+    </div> 
 
     <!-- 系统JS导入开始 -->
     <!-- angularjs 服务层导入 -->
-    <script src="App/services/Link.GanGao.Services.js"></script>    
+    <script src="App/services/httpServices.js"></script>
+    <script src="App/services/lang_CN.js"></script>
+    <script src="App/services/utils.GanGao.Service.js"></script>
+    
+    <script src="/App/services/Link.GanGao.Services.js"></script>    
+    <script src="App/services/User.GanGao.Services.js"></script>
+    <!-- angularjs 控制层导入 -->    
+    <script src="App/Controllers/error.GanGao.Controller.js"></script>
+    <script src="App/Controllers/confirmm.GanGao.Controller.js"></script>
+    <script src="/App/Controllers/Index.GanGao.Controller.js"></script>
+    <script src="App/Controllers/Users.GanGao.Controller.js"></script>
 
-    <!-- angularjs 控制层导入 -->
-    
-    <script src="App/Controllers/Index.GanGao.Controller.js"></script>
-    
     <!-- angularjs 操作层导入 -->
     
     

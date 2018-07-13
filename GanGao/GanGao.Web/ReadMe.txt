@@ -53,3 +53,13 @@ https://github.com/lizhi5753186/OnlineStore
 支持CQRS的DDD框架
 
 https://github.com/lizhi5753186/Fastworks
+
+注意：
+1. $modal 不存在问题
+Angular UI Bootstrap renamed the $modal directive to $uibModal in version 0.14.0.
+
+Also note that $modalInstance is now $uibModalInstance.
+
+See the Angular UI Bootstrap documentation for Modal here.
+2. 
+VS2015 自带的bootstrap-notify版本低，要更新到3.x

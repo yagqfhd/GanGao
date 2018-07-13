@@ -88,7 +88,7 @@ namespace GanGao.IBLL.Systems
         /// <param name="Limit"></param>
         /// <param name="Order"></param>
         /// <returns></returns>
-        Task<IEnumerable<DTOUser>> UserPageListAsync(int Index, int Limit, string Order);
+        Task<DTOPage<DTOUser>> UserPageListAsync(int Index, int Limit, string Order);
         #endregion
 
         #region //// 部门相关

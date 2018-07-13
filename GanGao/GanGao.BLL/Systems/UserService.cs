@@ -340,11 +340,12 @@ namespace GanGao.BLL
         /// <param name="limit"></param>
         /// <param name="Order"></param>
         /// <returns></returns>
-        public virtual Task<IEnumerable<DTOUser>> UserPageListAsync(int skip, int limit, string Order)
+        public virtual Task<DTOPage<DTOUser>> UserPageListAsync(int skip, int limit, string Order)
         {
             PublicHelper.CheckArgument(Order, "Order");
             PublicHelper.CheckArgument(skip, "Index",true);            
             PublicHelper.CheckArgument(limit, "Limit");
+
             //获取记录数
             var allCount = Repository.Entities.Count();
             // 计算跳过记录数
@@ -357,12 +358,15 @@ namespace GanGao.BLL
             }
             try
             {
+                var result = new DTOPage<DTOUser>();
                 // 获取排序查询
                 var query = Repository.Entities.OrderBy(Order);
                 // 获取分页数据
                 var users = query.Skip(skip).Take(limit).ToList();
+                result.Total = allCount;
+                result.Data = DtoMap.Map<IEnumerable<DTOUser>>(users);
                 // 模型转换        
-                return Task.FromResult<IEnumerable<DTOUser>>(DtoMap.Map<IEnumerable<DTOUser>>(users));
+                return Task.FromResult<DTOPage<DTOUser>>(result);
             }
             catch(DataAccessException ex)
             {

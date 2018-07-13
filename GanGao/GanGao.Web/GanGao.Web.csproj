@@ -80,19 +80,23 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App\Controllers\HomeController.js" />
-    <Content Include="App\Controllers\rolesControllers.js" />
+    <Content Include="App\Controllers\confirmm.GanGao.Controller.js" />
+    <Content Include="App\Controllers\error.GanGao.Controller.js" />
     <Content Include="App\Controllers\Index.GanGao.Controller.js" />
-    <Content Include="App\Controllers\usersControllers.js" />
+    <Content Include="App\Controllers\Users.GanGao.Controller.js" />
     <Content Include="App\Directives\directives.js" />
     <Content Include="App\filters\filters.js" />
-    <Content Include="App\services\AjaxServices.js" />
+    <Content Include="App\services\httpServices.js" />
     <Content Include="App\services\lang_CN.js" />
     <Content Include="App\services\Link.GanGao.Services.js" />
-    <Content Include="App\services\services.js" />
+    <Content Include="App\services\utils.GanGao.Service.js" />
     <Content Include="App\styles\site.css" />
     <Content Include="App\views\users\base.html" />
+    <Content Include="App\views\users\detail.html" />
+    <Content Include="App\views\users\list.html" />
     <Content Include="App\views\utils\404.html" />
+    <Content Include="App\views\utils\confirmModal.html" />
+    <Content Include="App\views\utils\errorModal.html" />
     <Content Include="Content\bootstrap-notify.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -102,6 +106,7 @@
     <Content Include="Content\styles\alert-blackgloss.css" />
     <Content Include="Content\ui-bootstrap-csp.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="images\loading.gif" />
     <Content Include="index.html" />
     <Content Include="packages.config" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -124,6 +129,7 @@
     <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\angular.min.js.map" />
     <Content Include="Scripts\angular-route.min.js.map" />
+    <Content Include="App\services\User.GanGao.Services.js" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="App\app.js" />
     <Content Include="Scripts\bootstrap-notify.js" />
@@ -153,7 +159,7 @@
     <Compile Include="StartupWeb.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="images\" />
+    <Folder Include="App\routes\" />
     <Folder Include="Views\" />
   </ItemGroup>
   <PropertyGroup>

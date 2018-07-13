@@ -76,7 +76,7 @@ namespace GanGao.WebAPI.Controllers
             Console.WriteLine("User/Get userService={0}", userService == null);
             if (userService == null)
             {
-                return Ok("UserServer Map Error");
+                return BadRequest("UserServer Map Error");
             }
             //[FromUri]string username
 #endif 

@@ -1,7 +1,7 @@
 ﻿'use strict';
 
 (function () {
-    var service = angular.module('GanGao.Services', []);
+    var app = angular.module('GanGao.Services');
     // 
     var lang = {};
     lang["server"] = {
@@ -77,7 +77,7 @@
     lang["navigation"] = { exit: "退出系统" };
 
     // 创建language服务
-    service.factory("language", [function () {
+    app.factory("language", [function () {
         var fn = function () {
             var ls = {};
             //添加通用消息
