@@ -1,11 +1,67 @@
 ﻿<!DOCTYPE html>
-<html>
+<html ng-app="GanGao" id="ng-app">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title></title>
-	<meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>GanGao权限管理系统</title>
+    <!-- CSS 导入 -->
+    <link href="/Content/bootstrap.css" rel="stylesheet" />
+    <link href="/App/styles/site.css" rel="stylesheet" />
+    <!-- 基本JS导入 -->
+    <script src="/Scripts/jquery-3.3.1.js"></script>
+    <script src="/Scripts/angular.js"></script>
+    <script src="/Scripts/angular-route.js"></script>
+    <script src="/Scripts/bootstrap.js"></script>
+    <script src="Scripts/angular-ui/ui-bootstrap-tpls.js"></script>
+    <script src="/Scripts/bootstrap-notify.js"></script>
 </head>
-<body>
-    测试
+<body ng-controller="navigation">
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">GanGao权限管理系统</a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-left">
+                    <li ng-repeat="item in ls">
+                        <a href="#{{item.urls}}">{{item.name}}</a>
+                    </li>
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">       
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - 我的 ASP.NET 应用程序</p>
+        </footer>
+    </div>
+
+
+    <!-- 系统JS导入开始 -->
+    <!-- angularjs 服务层导入 -->
+    <script src="App/services/Link.GanGao.Services.js"></script>    
+
+    <!-- angularjs 控制层导入 -->
+    
+    <script src="App/Controllers/Index.GanGao.Controller.js"></script>
+    
+    <!-- angularjs 操作层导入 -->
+    
+    
+    <!-- angularjs 过滤层导入 -->
+    
+
+    <!-- angularjs 路由导入 -->    
+    <script src="/App/app.js"></script>
+
+    <!-- 系统JS导入结束 -->
 </body>
 </html>
