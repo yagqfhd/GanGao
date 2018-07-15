@@ -19,11 +19,21 @@
                             isLoad = true;
                             angular.forEach(roles, function (dep) {
                                 dep.IsSelected = false;
-                            });
-                            ls = roles.slice(start, end); //angular.extend(ls, roles);
+                            });                            
+                            var countRole = 0;
+                            angular.forEach(roles, function (dep) {
+                                countRole++;
+                                if (countRole > start && countRole < end)
+                                    angular.extend(ls, dep);
+                            });                                                            
                         });
                     }
-                    ls = roles.slice(start, end);
+                    var countRole = 0;
+                    angular.forEach(roles, function (dep) {
+                        countRole++;
+                        if (countRole > start && countRole < end)
+                            angular.extend(ls, dep);
+                    });                    
                     return ls;
                 },
                 "delete": function (id) {
