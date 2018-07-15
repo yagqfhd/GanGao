@@ -5,6 +5,8 @@
     // 
     var lang = {};
     lang["server"] = {
+        API_PATH: "http://localhost:8082/api",
+        TEMPLATE_Path : "/app/views",
         USER_NAME_HAS_EXIST: "已经包含相同的用户名！",
         USER_NOT_EXIST: "用户不存在",
         ROLE_NAME_HAS_EXIST: "已经包含相同的角色名称！",

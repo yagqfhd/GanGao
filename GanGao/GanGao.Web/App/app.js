@@ -1,6 +1,7 @@
 ﻿'use strict';
 // 立即执行函数
 (function () {
+    
     var app = angular.module("GanGao", ['ngRoute', "ui.bootstrap","GanGao.Services", "GanGao.Controllers"]);
 
     app.config(['$routeProvider', function ($routeProvider) {

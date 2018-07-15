@@ -36,12 +36,19 @@
 
     }]);
 
-    app.controller("usersDetail", ['$scope', "language", "usersService", "$routeParams", "utils", "$uibModal", function ($scope, language, usersService, $routeParams, utils, $uibModal) {
+    app.controller("usersDetail",
+        ['$scope', "language", "departmentService", "roleService",
+            "usersService", "$routeParams", "utils", "$uibModal",
+            function ($scope, language, departmentService, roleService,
+                usersService, $routeParams, utils, $uibModal) {
         var service = usersService.user;
-        var lang = language(true, "userForm");
+        var lang = language(true, "userForm");        
         var org;
+        //var departments = 
         var methods = {
             lang: lang,
+            departments: departmentService.alllist(false),
+            roles:roleService.list.get({page:1,limit:1000}),
             cancel: function () {
                 $uibModalInstance.dismiss('cancel');
             },
@@ -51,65 +58,47 @@
                 if (angular.equals(org, $scope.model)) {
                     return utils.confirm({ msg: lang.formNotModified, ok: lang.ok });
                 }
-                if (!$.trim(model.Name) || !$.trim(model.RealName) || !$.trim(model.Email)) return;
-                if (model.Id > 0) {
-                    service.update(model).success(function (data) {
-                        if (data.IsSaved) {
+                if (!$.trim(model.Name) || !$.trim(model.TrueName) || !$.trim(model.Email)) return;
+                if ($scope.isModified) {
+                    service.update(model).then(function (data) {
+                       
                             utils.notify(lang.saveSuccess, "success");
                             org = angular.copy(model);
                             return;
-                        }
+                       
                     });
                 } else {
-                    service.create(model).success(function (data) {
-                        if (data.IsCreated) {
+                    service.create(model).then(function (data) {
+                        
                             utils.notify(lang.saveSuccess, "success");
-                            $scope.model.Id = data.Id;
+                            //$scope.model.Id = data.Id;
                             org = angular.copy(model);
                             return;
-                        }
+                        
                     });
                 }
-            },
-            append: function () {
-                var modal = $modal.open({
-                    templateUrl: 'users-chooseRoles ',
-                    backdrop: "static",
-                    controller: "chooseRoles",
-                    size: "lg",
-                    resolve: {
-                        params: function () {
-                            return $scope.model;
-                        }
-                    }
-                });
-
-                modal.result.then(function () {
-                    usersService.user.updateRoles($scope.model).success(function (data) {
-                        if (data.IsSaved) {
-                            methods.getRoles();
-                        }
-                    });
-                });
-            },
+            },            
             model: {},
+            
             remove: function (item) {
                 var modal = utils.confirm({ msg: lang.confirmDelete, ok: lang.ok, cancel: lang.cancel });
                 modal.result.then(function () {
                     service.deleteRole($scope.model.Id, item.Id).success(function (data) {
-                        if (data.IsDeleted) {
+        
                             utils.notify(lang.deleteSuccess, "success");
                             utils.remove($scope.model.Roles, item);
-                        }
                     });
                 });
             },
         };
+        
+
         if (methods.isModified) {
-            service.get({ id: $routeParams.id, size: 100 }).success(function (data) {
-                org = data.Data;
+            service.get({ id: $routeParams.id, size: 100 }).then(function (data) {
+                org = data;
                 $scope.model = angular.copy(org);
             });
+            
             methods.title = methods.lang.modifiedTitle;
         } else {
             methods.title = methods.lang.createTitle;

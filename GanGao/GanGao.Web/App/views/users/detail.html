@@ -5,15 +5,32 @@
 </div>
 <div class="row">
     <div>
-        <tabset>
-            <tab heading="{{lang.baseInfo}}">
+        <uib-tabset>
+            <uib-tab index="0" heading="{{lang.baseInfo}}">
                 <div ng-include="'/app/views/users/base.html'"></div>
-            </tab>
-            <!--
-            <tab heading="{{lang.linkInfo}}" disable="!model.Id" ng-click="getRoles()">
-                <div ng-include="'/users-link'"></div>
-            </tab>
-            -->
-        </tabset>
+            </uib-tab>            
+            <uib-tab index="1" heading="用户部门信息">
+                <div>
+                    <ul class="list-group">
+                        <li class="list-group-item">部门列表</li>
+                        <li class="list-group-item" ng-repeat="dep in model.Departments">
+                            部门：[{{dep.Name}}]所属角色：
+                            <select class="selectpicker"  multiple data-live-search="true">                                
+                                <option ng-repeat="role in departments">{{role.Name}}</option>
+                            </select>  
+                            
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <ul class="list-group">
+                        <li class="list-group-item" ng-repeat="ro in model.departments">
+                            角色:{{ro.Name}}
+                        </li>
+                    </ul>
+                    <span ng-repeat="r in departments">部门列表{{r}}{{r.Name}}</span>
+                </div>
+            </uib-tab>
+        </uib-tabset>
     </div>
 </div>

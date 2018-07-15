@@ -40,10 +40,15 @@ namespace GanGao.BLL.Validators
                 u.TrueName.Equals(item.TrueName));
             if (users != null)
             {
+                Console.WriteLine("UserValidator:Users={0}", users.Count());
                 foreach(var user in users)
                 {
                     if(!EqualityComparer<string>.Default.Equals(user.Id, item.Id))
                     {
+                        Console.WriteLine("user.Id={0}, item.Id={1}", user.Id, item.Id);
+                        Console.WriteLine("user.Name={0}, item.Name={1}", user.Name, item.Name);
+                        Console.WriteLine("user.Email={0}, item.Email={1}", user.Email, item.Email);
+                        Console.WriteLine("user.Nick={0}, item.Nick={1}", user.Nick, item.Nick);
                         if (user.Name.Equals(item.Name))
                             return new OperationResult(OperationResultType.Failed,
                                 String.Format(CultureInfo.CurrentCulture,

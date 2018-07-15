@@ -1,5 +1,5 @@
 ﻿(function () {
-    var app = angular.module("GanGao.Controllers", []);
+    var app = angular.module("GanGao.Services");
 
     app.controller("errorModal", ['$scope', '$uibModalInstance', 'error', function ($scope, $uibModalInstance, error) {
         var methods = {

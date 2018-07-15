@@ -100,8 +100,8 @@ namespace GanGao.DAL.Migrations
             #region /// 初始化用户
             List<SysUser> users = new List<SysUser>
             {
-                new SysUser { Name = "admin",PasswordHash = _defaultPassword  },
-                new SysUser { Name = "fhd",PasswordHash = _defaultPassword }
+                new SysUser { Name = "admin",Email="admin@qq.com",Nick="管理员",TrueName="管理员",PasswordHash = _defaultPassword  },
+                new SysUser { Name = "fhd",Email="fhd@qq.com",Nick="无所谓",TrueName="付宏达",PasswordHash = _defaultPassword }
             };
             var admin = users.FirstOrDefault(d => d.Name == "admin");
 

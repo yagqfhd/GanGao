@@ -1,0 +1,19 @@
+﻿<div class="panel-group" id="accordion">
+    <div class="panel panel-default" ng-repeat="dep in model.Departments">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                    <a href="javascript:;" data-toggle="collapse" data-parent="#accordion"
+                       data-target="#collapse{{dep.Name}}">
+                        {{dep.Name}}
+                    </a>
+            </h4>
+        </div>
+        <div id="collapse{{dep.Name}}" class="panel-collapse collapse">
+            <div class="panel-body">
+                <select class="selectpicker">
+                    <option ng-repeat="role in dep.Roles" >{{role.Name}}</option>
+                </select>                
+            </div>
+        </div>
+    </div>
+</div>
