@@ -4,6 +4,16 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title></title>
 	<meta charset="utf-8" />
+    <script src="Scripts/director.js"></script>
+    <script type="text/javascript">
+        var routes = {
+            '/testDirectorFirst': function () { console.log("This is the url for testDirectorFirst") },
+            '/testDirectorSecond': function () { console.log("This is the url for testDirectorSecond") },
+            '/testDirectorThird': function () { console.log("This is the url for testDirectorThird") }
+        };
+        var router = new Router(routes);
+        router.init();
+    </script>
     <script data-main="/App/main" src="Scripts/require.js"></script>   
 </head>
 <body>
