@@ -1,0 +1,22 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+	<meta charset="utf-8" />
+    <script data-main="/App/main" src="Scripts/require.js"></script>   
+</head>
+<body>
+    <div>
+        <ul>
+            <li><a href="#/author">#/author</a></li>
+            <li><a href="#/books">#/books</a></li>
+            <li><a href="#/books/view/1">#/books/view/1</a></li>
+        </ul>
+    </div>
+
+    <main id="main" data-bind="template: { name: 'Index', data: require('KnockoutIndex-js').data, afterRender: require('KnockoutIndex-js').afterRender}">
+
+    </main>
+ </body>
+</html>

@@ -14,7 +14,7 @@ namespace GanGao.Web
         public void Configuration(IAppBuilder app)
         {
 #if DEBUG
-            var webHostPath = @"E:\Web\GanGao\GanGao\GanGao.Web.Knockout\";
+            var webHostPath = @"E:\Web\GanGao\GanGao\GanGao.Web\";
 #else
             var webHostPath = AppDomain.CurrentDomain.BaseDirectory;
 #endif

@@ -88,6 +88,11 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App\director\router.js" />
+    <Content Include="App\director\routes.js" />
+    <Content Include="App\knockout\index.js" />
+    <Content Include="App\require\index.js" />
+    <Content Include="App\main.js" />
     <Content Include="Content\bootstrap-notify.css" />
     <Content Include="Content\bootstrap-select.css" />
     <Content Include="Content\bootstrap-select.min.css" />
@@ -98,6 +103,7 @@
     <Content Include="Content\styles\alert-bangtidy.css" />
     <Content Include="Content\styles\alert-blackgloss.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="index.html" />
     <Content Include="packages.config" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -200,18 +206,26 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\knockout-3.4.2.debug.js" />
     <Content Include="Scripts\knockout-3.4.2.js" />
+    <Content Include="Scripts\knockout-amd-helpers.js" />
+    <Content Include="Scripts\knockout-amd-helpers.min.js" />
     <Content Include="Scripts\knockout.binding-conventions-1.0.61.0.js" />
     <Content Include="Scripts\knockout.binding-conventions-1.0.61.0.min.js" />
     <Content Include="Scripts\knockout.bootstrap-1.0.7.0.js" />
     <Content Include="Scripts\knockout.bootstrap-1.0.7.0.min.js" />
     <Content Include="Scripts\knockout.mapping-latest.debug.js" />
     <Content Include="Scripts\knockout.mapping-latest.js" />
+    <Content Include="Scripts\r.js" />
+    <Content Include="Scripts\require.js" />
+    <Content Include="Scripts\text.js" />
+    <Content Include="templates\knockout\index.html" />
+    <Content Include="templates\Require\index.html" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StartupWeb.cs" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
