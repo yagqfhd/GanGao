@@ -4,29 +4,48 @@
 
     var departments = {};
     var isLoad=false;
-    app.factory("departmentService", ["http", "language", function (http, language) {
+    app.factory("departmentService", ["http", "language",'$q', function (http, language,$q) {
         var lang = language(true, "departmentForm");
-
-        var methods = {
-            alllist: function (refresh) {
-                var ls = {};
-                if (!isLoad || !!refresh) {
-                    http.post(lang.API_PATH + "/department/page", { page: 1, limit: 1000 })
+        var methods = {            
+            list: {
+                "all": function (refresh) {
+                    var ls = {};
+                    var def = $q.defer();
+                    if (!isLoad || !!refresh) {
+                        http.post(lang.API_PATH + "/department/page", { page: 1, limit: 1000 })
+                        .then(function (data) {
+                            departments =angular.copy(data);
+                            isLoad = true;
+                            angular.forEach(departments, function (dep) {
+                                dep.IsSelected = false;
+                            });
+                            //ls = angular.copy(departments);
+                            angular.extend(ls, departments);
+                            def.resolve(ls);
+                        });
+                    }
+                    else {
+                        angular.extend(ls, departments);
+                        def.resolve(ls);
+                    }
+                    return def.promise;
+                    //ls = angular.copy(departments);
+                    //angular.extend(ls, departments);
+                    //return ls;
+                },
+                "get": function (param) {
+                    var ls = {};
+                    http.post(lang.API_PATH + "/department/page", param)
                     .then(function (data) {
-                        departments =angular.copy(data);
+                        departments = angular.copy(data);
                         isLoad = true;
                         angular.forEach(departments, function (dep) {
                             dep.IsSelected = false;
                         });
-                        ls = angular.extend(ls, departments);
+                        ls = angular.copy(departments);
                     });
-                }
-                ls = angular.extend(ls, departments);
-                return ls;
-            },
-            list: {
-                "get": function (param) {
-                    return http.post(lang.API_PATH + "/department/page", param);
+                    ls = angular.copy(departments);
+                    return ls;
                 },
                 "delete": function (id) {
                     return http.post(lang.API_PATH + "/department/delete/" + id);

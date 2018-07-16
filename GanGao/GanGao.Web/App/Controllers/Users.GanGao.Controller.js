@@ -1,6 +1,6 @@
 ﻿(function () {
     var app = angular.module("GanGao.Controllers");
-
+    /// 用户列表显示控制器
     app.controller("users", ['$scope', 'usersService', 'utils', 'language', function ($scope, usersService, utils, language) {
         var lang = language(true, "userList");
         var service = usersService.list;
@@ -35,20 +35,17 @@
         methods.search();
 
     }]);
-
+    ///个体用户详细信息显示控制器
     app.controller("usersDetail",
-        ['$scope', "language", "departmentService", "roleService",
+        ['$scope', "language", "roleService",
             "usersService", "$routeParams", "utils", "$uibModal",
-            function ($scope, language, departmentService, roleService,
+            function ($scope, language, roleService,
                 usersService, $routeParams, utils, $uibModal) {
         var service = usersService.user;
         var lang = language(true, "userForm");        
-        var org;
-        //var departments = 
+        var org;     
         var methods = {
             lang: lang,
-            departments: departmentService.alllist(false),
-            roles:roleService.list.get({page:1,limit:1000}),
             cancel: function () {
                 $uibModalInstance.dismiss('cancel');
             },
@@ -65,44 +62,78 @@
                             utils.notify(lang.saveSuccess, "success");
                             org = angular.copy(model);
                             return;
-                       
                     });
                 } else {
                     service.create(model).then(function (data) {
-                        
                             utils.notify(lang.saveSuccess, "success");
-                            //$scope.model.Id = data.Id;
                             org = angular.copy(model);
                             return;
-                        
                     });
                 }
             },            
-            model: {},
-            
+            model: {},            
             remove: function (item) {
                 var modal = utils.confirm({ msg: lang.confirmDelete, ok: lang.ok, cancel: lang.cancel });
                 modal.result.then(function () {
                     service.deleteRole($scope.model.Id, item.Id).success(function (data) {
-        
                             utils.notify(lang.deleteSuccess, "success");
                             utils.remove($scope.model.Roles, item);
                     });
                 });
             },
+            all: {},
         };
-        
-
+        roleService.list.all(false).then(function (data) {
+            angular.forEach(data, function (l) {
+                l.isChecked = false;
+            });
+            $scope.all = angular.copy(data);
+        });
         if (methods.isModified) {
             service.get({ id: $routeParams.id, size: 100 }).then(function (data) {
                 org = data;
                 $scope.model = angular.copy(org);
+                angular.forEach($scope.all, function (l) {
+                    angular.forEach(org, function (k) {
+                        if (k.Name == l.Name)
+                            l.isChecked = true;
+                    });
+                });
             });
-            
             methods.title = methods.lang.modifiedTitle;
         } else {
             methods.title = methods.lang.createTitle;
         }
         angular.extend($scope, methods);
     }]);
+
+    ///显示用户部门信息控制器
+    app.controller("usersDepartments",['$scope', "departmentService",function ($scope, departmentService) {
+        var service = departmentService.list;
+        var org = $scope.model.Departments;
+        //angular.extend(org,$scope.model.Departments || []);
+        var methods = {
+            search: function () {
+                var tmpDeps = {};
+                service.all(true).then(function (data) {
+                    angular.forEach(data, function (l) {
+                        l.isChecked = true;
+                        angular.forEach(org, function (v) {
+                            if (l.Name == v.Name) {
+                                l.isChecked = false;
+                            }
+                        });
+                    });
+                    angular.extend(tmpDeps,data);
+                    //tmpDeps = data;
+                });                
+                $scope.departments = tmpDeps;
+            }
+        };                    
+        methods.search();
+        angular.extend($scope, methods);
+      
+    }]);
+
+
 })()

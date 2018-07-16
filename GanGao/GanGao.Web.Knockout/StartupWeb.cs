@@ -5,16 +5,16 @@ using Owin;
 using Microsoft.Owin.FileSystems;
 using Microsoft.Owin.StaticFiles;
 
-[assembly: OwinStartup(typeof(GanGao.Web.StartupWeb))]
+[assembly: OwinStartup(typeof(GanGao.Web.Knockout.StartupWeb))]
 
-namespace GanGao.Web
+namespace GanGao.Web.Knockout
 {
     public class StartupWeb
     {
         public void Configuration(IAppBuilder app)
         {
 #if DEBUG
-            var webHostPath = @"E:\Web\GanGao\GanGao\GanGao.Web.Knockout\";
+            var webHostPath = @"E:\Web\GanGao\GanGao\GanGao.Web\";
 #else
             var webHostPath = AppDomain.CurrentDomain.BaseDirectory;
 #endif

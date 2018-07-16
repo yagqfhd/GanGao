@@ -11,25 +11,29 @@
             </uib-tab>            
             <uib-tab index="1" heading="用户部门信息">
                 <div>
-                    <ul class="list-group">
-                        <li class="list-group-item">部门列表</li>
-                        <li class="list-group-item" ng-repeat="dep in model.Departments">
-                            部门：[{{dep.Name}}]所属角色：
-                            <select class="selectpicker"  multiple data-live-search="true">                                
-                                <option ng-repeat="role in departments">{{role.Name}}</option>
-                            </select>  
-                            
-                        </li>
-                    </ul>
-                </div>
-                <div>
-                    <ul class="list-group">
-                        <li class="list-group-item" ng-repeat="ro in model.departments">
-                            角色:{{ro.Name}}
-                        </li>
-                    </ul>
-                    <span ng-repeat="r in departments">部门列表{{r}}{{r.Name}}</span>
-                </div>
+                    <table class="table table-hover table-bordered">
+                        <thead>
+                            <tr>
+                                <th class="col-sm-2">所属部门</th>
+                                <th>部门角色</th>
+                                <th class="col-sm-1"><button ng-click="append()" class="btn btn-primary btn-xs">添加部门</button></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="dep in model.Departments">
+                                <td>{{dep.Name}}</td>
+                                <td>
+                                    <select class="selectpicker col-xs-12 col-md-10" multiple data-live-search="true" ng-model="dep.Roles">
+                                        <option ng-repeat="role in all" value="{{role.Name}}">
+                                            {{role.Name}}({{role.Description}})
+                                        </option>
+                                    </select>  
+                                </td>
+                                <td><button class="btn btn-danger btn-xs" ng-click="remove(item)">{{lang.remove}}</button></td>
+                            </tr>
+                        </tbody>
+                    </table>                    
+                </div>                
             </uib-tab>
         </uib-tabset>
     </div>
