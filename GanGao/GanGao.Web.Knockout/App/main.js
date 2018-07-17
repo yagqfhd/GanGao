@@ -1,4 +1,5 @@
-﻿
+﻿/// <reference path="E:\Web\GanGao\GanGao\GanGao.Web.Knockout\Scripts/knockout.mapping-latest.js" />
+
 var paths = {
     ///系统模块
     'jquery': 'Scripts/jquery-3.3.1',
@@ -7,6 +8,11 @@ var paths = {
     "director": "Scripts/director",
     'knockout': 'Scripts/knockout-3.4.2',
     "knockout-amd-helpers": "Scripts/knockout-amd-helpers",
+    "ko.mapping" : "Scripts/knockout.mapping-latest",
+
+    /// 服务模块
+    "http" : "App/services/http.GanGao.Ajax",
+    "userService" : "app/services/User.GanGao.Services",
 
     /// 错误处理模块
     'Error-js': 'app/public/Error',
@@ -23,6 +29,9 @@ var paths = {
     ///首页模板
     'Index-js': 'app/controllers/index-js',
     'index-html': 'templates/index-html.html',
+
+    'Users-js': 'app/controllers/User.GanGao.Controllers',
+    "Users-html" : "templates/users-html.html",
 
     ///模块管理模块定义
     'WebPageContrl': 'App/public/HtmlTemplateManager',

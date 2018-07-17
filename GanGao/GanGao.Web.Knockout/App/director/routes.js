@@ -2,7 +2,7 @@
     '/error404/:code': 'Error /',
     '/': 'Index /',
     '': 'Index /',
-
-    //Customer
+    '/Users': 'Users /', // 用户管理
+    '/Departments':'Departments /' , /// 部门管理
     '/Index': 'Index /',
 })

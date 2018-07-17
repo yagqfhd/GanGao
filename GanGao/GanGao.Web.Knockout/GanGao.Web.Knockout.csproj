@@ -89,12 +89,15 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App\Controllers\Index-js.js" />
+    <Content Include="App\Controllers\User.GanGao.Controllers.js" />
     <Content Include="App\director\router.js" />
     <Content Include="App\director\routes.js" />
     <Content Include="App\public\Error.js" />
     <Content Include="App\public\HtmlTemplateManager.js" />
     <Content Include="App\public\navbar.js" />
     <Content Include="App\main.js" />
+    <Content Include="App\services\http.GanGao.Ajax.js" />
+    <Content Include="App\services\User.GanGao.Services.js" />
     <Content Include="Content\bootstrap-notify.css" />
     <Content Include="Content\bootstrap-select.css" />
     <Content Include="Content\bootstrap-select.min.css" />
@@ -226,6 +229,7 @@
     <Content Include="templates\knockout\index.html" />
     <Content Include="templates\navbar\navbar.html" />
     <Content Include="templates\Require\index.html" />
+    <Content Include="templates\users-html.html" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
