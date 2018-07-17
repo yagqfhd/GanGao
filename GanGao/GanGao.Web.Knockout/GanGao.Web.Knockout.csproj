@@ -88,10 +88,12 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App\Controllers\Index-js.js" />
     <Content Include="App\director\router.js" />
     <Content Include="App\director\routes.js" />
-    <Content Include="App\knockout\index.js" />
-    <Content Include="App\require\index.js" />
+    <Content Include="App\public\Error.js" />
+    <Content Include="App\public\HtmlTemplateManager.js" />
+    <Content Include="App\public\navbar.js" />
     <Content Include="App\main.js" />
     <Content Include="Content\bootstrap-notify.css" />
     <Content Include="Content\bootstrap-select.css" />
@@ -100,6 +102,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\site.css" />
     <Content Include="Content\styles\alert-bangtidy.css" />
     <Content Include="Content\styles\alert-blackgloss.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -218,7 +221,10 @@
     <Content Include="Scripts\r.js" />
     <Content Include="Scripts\require.js" />
     <Content Include="Scripts\text.js" />
+    <Content Include="templates\Error-html.html" />
+    <Content Include="templates\Index-html.html" />
     <Content Include="templates\knockout\index.html" />
+    <Content Include="templates\navbar\navbar.html" />
     <Content Include="templates\Require\index.html" />
     <Content Include="Web.config" />
   </ItemGroup>

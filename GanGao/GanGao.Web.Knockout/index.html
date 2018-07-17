@@ -4,29 +4,28 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title></title>
 	<meta charset="utf-8" />
-    <script src="Scripts/director.js"></script>
-    <script type="text/javascript">
-        var routes = {
-            '/testDirectorFirst': function () { console.log("This is the url for testDirectorFirst") },
-            '/testDirectorSecond': function () { console.log("This is the url for testDirectorSecond") },
-            '/testDirectorThird': function () { console.log("This is the url for testDirectorThird") }
-        };
-        var router = new Router(routes);
-        router.init();
-    </script>
-    <script data-main="/App/main" src="Scripts/require.js"></script>   
+    <link href="/Content/bootstrap.css" rel="stylesheet" />
+    <link href="/Content/bootstrap-notify.css" rel="stylesheet" />
+    <link href="/Content/bootstrap-select.css" rel="stylesheet" />
+    <link href="/Content/site.css" rel="stylesheet" />
+    <script data-main="/App/main" src="/Scripts/require.js"></script>   
 </head>
 <body>
-    <div>
-        <ul>
-            <li><a href="#/author">#/author</a></li>
-            <li><a href="#/books">#/books</a></li>
-            <li><a href="#/books/view/1">#/books/view/1</a></li>
-        </ul>
+    <navTop id="navTop" data-bind="component: { name: 'topMenu'}">
+    </navTop>
+    <div class="container body-content">
+        <div class="row">
+            <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                <ul>
+                    <li><a href="#/">#/author</a></li>
+                    <li><a href="#/books">#/books</a></li>
+                    <li><a href="#/books/view/1">#/books/view/1</a></li>
+                </ul>
+            </div>
+            <div class="col-lg-9 col-md-8 col-xs-12 col-sm-8">
+                <main id="main" data-bind="template: { name: page().name + '-html', data: page().data ,afterRender:afterRender}"></main>
+            </div>
+        </div>
     </div>
-
-    <main id="main" data-bind="template: { name: 'Index', data: require('KnockoutIndex-js').data, afterRender: require('KnockoutIndex-js').afterRender}">
-
-    </main>
  </body>
 </html>

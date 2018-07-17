@@ -1,9 +1,4 @@
-﻿/*
-    Author: TS
-    Date: 2016/12/24
-    Description: It's the main entry point for require.
- */
-
+﻿
 var paths = {
     ///系统模块
     'jquery': 'Scripts/jquery-3.3.1',
@@ -13,17 +8,25 @@ var paths = {
     'knockout': 'Scripts/knockout-3.4.2',
     "knockout-amd-helpers": "Scripts/knockout-amd-helpers",
 
-    ///测试Require用户模块
-    'RequireIndex-html': 'templates/Require/index.html',
-    "RequireIndex-js": 'app/Require/index',
-
-    "KnockoutIndex-html":"templates/knockout/index.html",
-    'KnockoutIndex-js': 'app/knockout/index',
+    /// 错误处理模块
+    'Error-js': 'app/public/Error',
+    'Error-html': 'templates/Error-html.html',
 
     /// director路由配置相关
     'director': 'Scripts/director',
     'Routes': 'app/director/routes',
-    'AppRouter': 'app/director/router'
+    'AppRouter': 'app/director/router',
+
+    /// Top导航模块定义
+    'navbar-js': 'app/public/navbar',
+
+    ///首页模板
+    'Index-js': 'app/controllers/index-js',
+    'index-html': 'templates/index-html.html',
+
+    ///模块管理模块定义
+    'WebPageContrl': 'App/public/HtmlTemplateManager',
+
 };
 
 var baseUrl = '/';
@@ -32,31 +35,34 @@ require.config({
     baseUrl: baseUrl,
     paths: paths,
     shim: {
+        /* TODO: provide all needed shims for non-AMD modules */
+        //'Router': {
+        //    exports: 'Router'
+        //},        
     }
 });
 
-require(["knockout", "KnockoutIndex-js", "knockout-amd-helpers", "text"], function (ko, KnockoutIndex) {
-    ko.amdTemplateEngine.defaultPath = "/templates/knockout";
-    ko.amdTemplateEngine.defaultSuffix = ".html";
-    //ko.amdTemplateEngine.defaultRequireTextPluginName = "text";
-
-    //ko.bindingHandlers.module.baseDir = "/templates/knockout";
-
-    //fruits/vegetable modules have embedded template
-    //ko.bindingHandlers.module.templateProperty = "embeddedTemplate";
-    ko.applyBindings(KnockoutIndex);
+require(["knockout", "navbar-js", "text"], function (ko, navbar) {
+    ko.components.register('topMenu', {
+        viewModel: navbar,
+        template: { require: 'text!/templates/navbar/navbar.html' }
+    });
+    console.log('绑定TOPMenu');
+    ko.applyBindings(navbar, document.getElementsByTagName('navTop')[0]);
 });
 
-//require(["jquery", "RequireIndex-js", "text!RequireIndex-html"],
-//    function ($, module, html) {
-//        console.log("Start test require html!");
-//        $('#main').html(html);
-//        console.log("Start test require js!");
-//        module.TestRequireJs();
-//    }
-//);
+
+
+require(["knockout", "knockout-amd-helpers", "text"], function (ko) {
+    ko.bindingHandlers.module.baseDir = "modules";
+    ko.amdTemplateEngine.defaultPath = "templates";
+    ko.amdTemplateEngine.defaultSuffix = ".html"
+    //fruits/vegetable modules have embedded template
+    ko.bindingHandlers.module.templateProperty = "embeddedTemplate";
+});
 
 require(['AppRouter'], function () {
+
     console.log('Start test router');
 });
 
