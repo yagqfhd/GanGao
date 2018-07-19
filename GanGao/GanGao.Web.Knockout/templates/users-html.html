@@ -1,7 +1,40 @@
-﻿<div>
-    This is the page for knockout!.用户管理
-    <ul data-bind="foreach: userList">
-        <li data-bind="text: Name">            
-        </li>
-    </ul>
+﻿
+<div>    
+    <h2>用户管理</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <td>用户名</td>
+            
+                <td>昵称</td>
+                <td>姓名</td>
+                <td>
+                    <button  type="button" class="btn btn-danger btn-xs" title="添加用户" data-bind="click:addClick">添加用户</button>
+                </td>
+            </tr>
+        </thead>
+        <!-- ko ifnot: loadingState -->
+        <tbody data-bind="foreach:Users">
+            <tr>
+                <td><span data-bind="text:Name"></span></td>
+                <td data-bind="text:Nick"></td>
+                <td data-bind="text:TrueName"></td>
+                <td>
+                    <button type="button" data-bind="click:$parent.remove" class="btn btn-danger btn-xs">删除</button>
+                    <a>修改</a>
+                </td>
+            </tr>
+        </tbody>
+        <!-- /ko -->
+        <!-- ko if: loadingState -->
+        <tbody>
+            <tr>
+                <td colspan="4"><span> 正在获取数据.....</span></td>                
+            </tr>
+        </tbody>
+        <!-- /ko -->
+    </table>
+    <div id="toolbar"></div>
+    <table id="userTable">        
+    </table>
 </div>

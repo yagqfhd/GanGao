@@ -4,16 +4,20 @@ var paths = {
     ///系统模块
     'jquery': 'Scripts/jquery-3.3.1',
     "text": "Scripts/text",
-    "bootstrap":"Scripts/bootstrap",
+    "bootstrap": "Scripts/bootstrap",
+    "bootstrapTable": "Scripts/bootstrap-table/bootstrap-table",
     "director": "Scripts/director",
     'knockout': 'Scripts/knockout-3.4.2',
     "knockout-amd-helpers": "Scripts/knockout-amd-helpers",
-    "ko.mapping" : "Scripts/knockout.mapping-latest",
+    "mapping": "Scripts/knockout.mapping-latest",
 
     /// 服务模块
     "http" : "App/services/http.GanGao.Ajax",
     "userService" : "app/services/User.GanGao.Services",
 
+    // 通用组件模块
+    "ganGaoTable" : "app/public/Table.GanGao.Controllers", /// 表格组件
+    "ganGaoModel" : "app/public/Model.GanGao.Controllers", /// 模式对话框
     /// 错误处理模块
     'Error-js': 'app/public/Error',
     'Error-html': 'templates/Error-html.html',
@@ -47,7 +51,18 @@ require.config({
         /* TODO: provide all needed shims for non-AMD modules */
         //'Router': {
         //    exports: 'Router'
-        //},        
+        //}, 
+        'knockout': {
+            exports: 'ko'
+        },
+        'mapping': {
+                deps: ['knockout'],
+                exports: 'mapping'
+        },
+        'bootstrapTable': {
+            deps: ['jquery'],
+            exports: "jQuery.fn.bootstrapTable"
+        }
     }
 });
 

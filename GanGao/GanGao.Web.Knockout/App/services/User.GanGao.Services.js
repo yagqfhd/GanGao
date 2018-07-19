@@ -1,12 +1,12 @@
 ﻿define(["http"], function (http) {
-    var apiBase = "http://127.0.0.1/API/Users/";
+    var apiBase = "http://localhost:8082/api/user";
     var userService= {
         list: {
             "get": function (param) {
-                return http.post(lang.API_PATH + "/user/page", param);
+                return http.post(apiBase + "/page", param);
             },
             "delete": function (id) {
-                return http.post(lang.API_PATH+"/user/delete/" + id);
+                return http.post(apiBase + "/delete/" + id);
             }
         },
         user: {
@@ -17,7 +17,7 @@
                 return http.post(lang.API_PATH+"/user/update", param);
             },
             "create": function (param) {
-                return http.post(lang.API_PATH + "/user/add", param);
+                return http.post(apiBase + "/user/add", param);
             },
             "addDepartment":function(params){
                 return http.post(lang.API_PATH + "/user/department/add", param);

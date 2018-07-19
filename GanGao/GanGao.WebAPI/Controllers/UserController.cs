@@ -73,7 +73,7 @@ namespace GanGao.WebAPI.Controllers
                 return BadRequest(this.GetModelStateError(ModelState));
             #endregion
 #if DEBUG
-            Console.WriteLine("User/Get userService={0}", userService == null);
+            Console.WriteLine("User/page 用户分页列表userService={0}", userService == null);
             if (userService == null)
             {
                 return BadRequest("UserServer Map Error");
@@ -104,6 +104,14 @@ namespace GanGao.WebAPI.Controllers
                 return BadRequest(this.GetModelStateError(ModelState));
             #endregion
             //OperationResult result;
+#if DEBUG
+            Console.WriteLine("User/add userService={0}", userService == null);
+            if (userService == null)
+            {
+                return BadRequest("UserServer Map Error");
+            }
+            //[FromUri]string username
+#endif 
             try
             {
                 // 调用服务创建用户
@@ -134,6 +142,14 @@ namespace GanGao.WebAPI.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(this.GetModelStateError(ModelState));
             #endregion
+#if DEBUG
+            Console.WriteLine("User/update userService={0}", userService == null);
+            if (userService == null)
+            {
+                return BadRequest("UserServer Map Error");
+            }
+            //[FromUri]string username
+#endif 
             // 调用服务创建用户
             var result = await userService.UpdateAsync(user);
             // 根据服务返回值确定返回

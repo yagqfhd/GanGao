@@ -7,9 +7,7 @@
         data: null,
         dataType: 'json',
         headers: "Content-Type:application/x-www-form-urlencoded",
-        onprogress: function () { },
-        onuploadprogress: function () { },
-        xhr: null
+        
     }
     
     var http = {
